@@ -1,0 +1,1675 @@
+{
+  "ciudades": [
+    {
+      "id": "lima_metropolitana",
+      "nombre": "LIMA METROPOLITANA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 9141029,
+      "segmentos_calles": 340566,
+      "ubicacion": {
+        "lat": -12.03425,
+        "lng": -76.985367
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "lima_metropolitana.png",
+      "archivo_miniatura": "lima_metropolitana_thumb.png",
+      "orientacion_dominante": 260,
+      "proporcion_dominante": 0.03428116723337033
+    },
+    {
+      "id": "arequipa",
+      "nombre": "AREQUIPA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 1006502,
+      "segmentos_calles": 91108,
+      "ubicacion": {
+        "lat": -16.382246,
+        "lng": -71.561452
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "arequipa.png",
+      "archivo_miniatura": "arequipa_thumb.png",
+      "orientacion_dominante": 210,
+      "proporcion_dominante": 0.041697765289546475
+    },
+    {
+      "id": "trujillo",
+      "nombre": "TRUJILLO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 915788,
+      "segmentos_calles": 44801,
+      "ubicacion": {
+        "lat": -8.092304,
+        "lng": -79.039095
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "trujillo.png",
+      "archivo_miniatura": "trujillo_thumb.png",
+      "orientacion_dominante": 10,
+      "proporcion_dominante": 0.04787839557152742
+    },
+    {
+      "id": "chiclayo",
+      "nombre": "CHICLAYO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 548192,
+      "segmentos_calles": 28959,
+      "ubicacion": {
+        "lat": -6.774137,
+        "lng": -79.844115
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "chiclayo.png",
+      "archivo_miniatura": "chiclayo_thumb.png",
+      "orientacion_dominante": 0,
+      "proporcion_dominante": 0.09499637418419145
+    },
+    {
+      "id": "piura",
+      "nombre": "PIURA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 468620,
+      "segmentos_calles": 30943,
+      "ubicacion": {
+        "lat": -5.188635,
+        "lng": -80.635062
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "piura.png",
+      "archivo_miniatura": "piura_thumb.png",
+      "orientacion_dominante": 10,
+      "proporcion_dominante": 0.0773680638593543
+    },
+    {
+      "id": "huancayo",
+      "nombre": "HUANCAYO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 465489,
+      "segmentos_calles": 25315,
+      "ubicacion": {
+        "lat": -12.05278,
+        "lng": -75.228185
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huancayo.png",
+      "archivo_miniatura": "huancayo_thumb.png",
+      "orientacion_dominante": 60,
+      "proporcion_dominante": 0.0640331819079597
+    },
+    {
+      "id": "cusco",
+      "nombre": "CUSCO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 422489,
+      "segmentos_calles": 20407,
+      "ubicacion": {
+        "lat": -13.531603,
+        "lng": -71.942148
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "cusco.png",
+      "archivo_miniatura": "cusco_thumb.png",
+      "orientacion_dominante": 100,
+      "proporcion_dominante": 0.049933846229235065
+    },
+    {
+      "id": "iquitos",
+      "nombre": "IQUITOS",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 371855,
+      "segmentos_calles": 11341,
+      "ubicacion": {
+        "lat": -3.767635,
+        "lng": -73.281718
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "iquitos.png",
+      "archivo_miniatura": "iquitos_thumb.png",
+      "orientacion_dominante": 0,
+      "proporcion_dominante": 0.050348293801252095
+    },
+    {
+      "id": "chimbote",
+      "nombre": "CHIMBOTE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 352952,
+      "segmentos_calles": 24855,
+      "ubicacion": {
+        "lat": -9.095611,
+        "lng": -78.550492
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "chimbote.png",
+      "archivo_miniatura": "chimbote_thumb.png",
+      "orientacion_dominante": 40,
+      "proporcion_dominante": 0.13108026554013277
+    },
+    {
+      "id": "pucallpa",
+      "nombre": "PUCALLPA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 324105,
+      "segmentos_calles": 20596,
+      "ubicacion": {
+        "lat": -8.389208,
+        "lng": -74.579314
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "pucallpa.png",
+      "archivo_miniatura": "pucallpa_thumb.png",
+      "orientacion_dominante": 160,
+      "proporcion_dominante": 0.14371722664595066
+    },
+    {
+      "id": "ica",
+      "nombre": "ICA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 290894,
+      "segmentos_calles": 18107,
+      "ubicacion": {
+        "lat": -14.061704,
+        "lng": -75.735695
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "ica.png",
+      "archivo_miniatura": "ica_thumb.png",
+      "orientacion_dominante": 260,
+      "proporcion_dominante": 0.06494725796653228
+    },
+    {
+      "id": "tacna",
+      "nombre": "TACNA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 282516,
+      "segmentos_calles": 34633,
+      "ubicacion": {
+        "lat": -18.033117,
+        "lng": -70.25315
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "tacna.png",
+      "archivo_miniatura": "tacna_thumb.png",
+      "orientacion_dominante": 140,
+      "proporcion_dominante": 0.054110241677013254
+    },
+    {
+      "id": "juliaca",
+      "nombre": "JULIACA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 276604,
+      "segmentos_calles": 25245,
+      "ubicacion": {
+        "lat": -15.493886,
+        "lng": -70.127651
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "juliaca.png",
+      "archivo_miniatura": "juliaca_thumb.png",
+      "orientacion_dominante": 240,
+      "proporcion_dominante": 0.08358090711031887
+    },
+    {
+      "id": "ayacucho",
+      "nombre": "AYACUCHO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 217551,
+      "segmentos_calles": 17465,
+      "ubicacion": {
+        "lat": -13.163497,
+        "lng": -74.218729
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "ayacucho.png",
+      "archivo_miniatura": "ayacucho_thumb.png",
+      "orientacion_dominante": 10,
+      "proporcion_dominante": 0.03956484397366161
+    },
+    {
+      "id": "cajamarca",
+      "nombre": "CAJAMARCA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 199677,
+      "segmentos_calles": 8755,
+      "ubicacion": {
+        "lat": -7.162268,
+        "lng": -78.498899
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "cajamarca.png",
+      "archivo_miniatura": "cajamarca_thumb.png",
+      "orientacion_dominante": 50,
+      "proporcion_dominante": 0.08429468874928613
+    },
+    {
+      "id": "huanuco",
+      "nombre": "HUANUCO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 197271,
+      "segmentos_calles": 10447,
+      "ubicacion": {
+        "lat": -9.929388,
+        "lng": -76.239019
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huanuco.png",
+      "archivo_miniatura": "huanuco_thumb.png",
+      "orientacion_dominante": 290,
+      "proporcion_dominante": 0.04671197472958744
+    },
+    {
+      "id": "sullana",
+      "nombre": "SULLANA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 183272,
+      "segmentos_calles": 10254,
+      "ubicacion": {
+        "lat": -4.909126,
+        "lng": -80.690027
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "sullana.png",
+      "archivo_miniatura": "sullana_thumb.png",
+      "orientacion_dominante": 0,
+      "proporcion_dominante": 0.06660815291593525
+    },
+    {
+      "id": "chincha_alta",
+      "nombre": "CHINCHA ALTA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 180347,
+      "segmentos_calles": 10328,
+      "ubicacion": {
+        "lat": -13.413232,
+        "lng": -76.138462
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "chincha_alta.png",
+      "archivo_miniatura": "chincha_alta_thumb.png",
+      "orientacion_dominante": 100,
+      "proporcion_dominante": 0.0640007745933385
+    },
+    {
+      "id": "huacho",
+      "nombre": "HUACHO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 155712,
+      "segmentos_calles": 10597,
+      "ubicacion": {
+        "lat": -11.102406,
+        "lng": -77.596003
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huacho.png",
+      "archivo_miniatura": "huacho_thumb.png",
+      "orientacion_dominante": 170,
+      "proporcion_dominante": 0.07020854958950647
+    },
+    {
+      "id": "tarapoto",
+      "nombre": "TARAPOTO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 143124,
+      "segmentos_calles": 7051,
+      "ubicacion": {
+        "lat": -6.494471,
+        "lng": -76.365042
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "tarapoto.png",
+      "archivo_miniatura": "tarapoto_thumb.png",
+      "orientacion_dominante": 220,
+      "proporcion_dominante": 0.060842433697347896
+    },
+    {
+      "id": "puno",
+      "nombre": "PUNO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 127818,
+      "segmentos_calles": 9808,
+      "ubicacion": {
+        "lat": -15.849395,
+        "lng": -70.012883
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "puno.png",
+      "archivo_miniatura": "puno_thumb.png",
+      "orientacion_dominante": 0,
+      "proporcion_dominante": 0.050061174551386624
+    },
+    {
+      "id": "huaraz",
+      "nombre": "HUARAZ",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 118097,
+      "segmentos_calles": 4609,
+      "ubicacion": {
+        "lat": -9.513305,
+        "lng": -77.522274
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huaraz.png",
+      "archivo_miniatura": "huaraz_thumb.png",
+      "orientacion_dominante": 90,
+      "proporcion_dominante": 0.06704274246040356
+    },
+    {
+      "id": "tumbes",
+      "nombre": "TUMBES",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 96098,
+      "segmentos_calles": 6199,
+      "ubicacion": {
+        "lat": -3.566903,
+        "lng": -80.43696
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "tumbes.png",
+      "archivo_miniatura": "tumbes_thumb.png",
+      "orientacion_dominante": 160,
+      "proporcion_dominante": 0.0809808033553799
+    },
+    {
+      "id": "talara",
+      "nombre": "TALARA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 90475,
+      "segmentos_calles": 5211,
+      "ubicacion": {
+        "lat": -4.583609,
+        "lng": -81.267769
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "talara.png",
+      "archivo_miniatura": "talara_thumb.png",
+      "orientacion_dominante": 250,
+      "proporcion_dominante": 0.06639800422183842
+    },
+    {
+      "id": "puerto_maldonado",
+      "nombre": "PUERTO MALDONADO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 84124,
+      "segmentos_calles": 6942,
+      "ubicacion": {
+        "lat": -12.592199,
+        "lng": -69.193788
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "puerto_maldonado.png",
+      "archivo_miniatura": "puerto_maldonado_thumb.png",
+      "orientacion_dominante": 40,
+      "proporcion_dominante": 0.1014116969173149
+    },
+    {
+      "id": "huaral",
+      "nombre": "HUARAL",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 83292,
+      "segmentos_calles": 4849,
+      "ubicacion": {
+        "lat": -11.48611,
+        "lng": -77.218033
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huaral.png",
+      "archivo_miniatura": "huaral_thumb.png",
+      "orientacion_dominante": 70,
+      "proporcion_dominante": 0.11899360692926376
+    },
+    {
+      "id": "barranca",
+      "nombre": "BARRANCA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 82687,
+      "segmentos_calles": 5355,
+      "ubicacion": {
+        "lat": -10.769422,
+        "lng": -77.747354
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "barranca.png",
+      "archivo_miniatura": "barranca_thumb.png",
+      "orientacion_dominante": 140,
+      "proporcion_dominante": 0.05378151260504202
+    },
+    {
+      "id": "paita",
+      "nombre": "PAITA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 82107,
+      "segmentos_calles": 7693,
+      "ubicacion": {
+        "lat": -5.090295,
+        "lng": -81.09688
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "paita.png",
+      "archivo_miniatura": "paita_thumb.png",
+      "orientacion_dominante": 140,
+      "proporcion_dominante": 0.0571948524632783
+    },
+    {
+      "id": "jaen",
+      "nombre": "JAEN",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 79565,
+      "segmentos_calles": 0,
+      "ubicacion": {
+        "lat": -5.716577,
+        "lng": -78.80183
+      },
+      "tiene_datos": false,
+      "archivo_grafico": "",
+      "archivo_miniatura": ""
+    },
+    {
+      "id": "pisco",
+      "nombre": "PISCO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 73342,
+      "segmentos_calles": 5571,
+      "ubicacion": {
+        "lat": -13.715817,
+        "lng": -76.206035
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "pisco.png",
+      "archivo_miniatura": "pisco_thumb.png",
+      "orientacion_dominante": 270,
+      "proporcion_dominante": 0.14503679770238737
+    },
+    {
+      "id": "ilo",
+      "nombre": "ILO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 73017,
+      "segmentos_calles": 11833,
+      "ubicacion": {
+        "lat": -17.642679,
+        "lng": -71.323364
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "ilo.png",
+      "archivo_miniatura": "ilo_thumb.png",
+      "orientacion_dominante": 220,
+      "proporcion_dominante": 0.09321389334910843
+    },
+    {
+      "id": "abancay",
+      "nombre": "ABANCAY",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 71781,
+      "segmentos_calles": 3092,
+      "ubicacion": {
+        "lat": -13.632378,
+        "lng": -72.882319
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "abancay.png",
+      "archivo_miniatura": "abancay_thumb.png",
+      "orientacion_dominante": 90,
+      "proporcion_dominante": 0.05304010349288486
+    },
+    {
+      "id": "moquegua",
+      "nombre": "MOQUEGUA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 68937,
+      "segmentos_calles": 8482,
+      "ubicacion": {
+        "lat": -17.195436,
+        "lng": -70.927021
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "moquegua.png",
+      "archivo_miniatura": "moquegua_thumb.png",
+      "orientacion_dominante": 270,
+      "proporcion_dominante": 0.050459797217637346
+    },
+    {
+      "id": "san_vicente_de_canete",
+      "nombre": "SAN VICENTE DE CAÑETE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 65738,
+      "segmentos_calles": 1992,
+      "ubicacion": {
+        "lat": -13.068084,
+        "lng": -76.367897
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "san_vicente_de_canete.png",
+      "archivo_miniatura": "san_vicente_de_canete_thumb.png",
+      "orientacion_dominante": 60,
+      "proporcion_dominante": 0.05471887550200803
+    },
+    {
+      "id": "yurimaguas",
+      "nombre": "YURIMAGUAS",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 62384,
+      "segmentos_calles": 3528,
+      "ubicacion": {
+        "lat": -5.898368,
+        "lng": -76.117556
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "yurimaguas.png",
+      "archivo_miniatura": "yurimaguas_thumb.png",
+      "orientacion_dominante": 70,
+      "proporcion_dominante": 0.06349206349206349
+    },
+    {
+      "id": "lambayeque",
+      "nombre": "LAMBAYEQUE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 59571,
+      "segmentos_calles": 3105,
+      "ubicacion": {
+        "lat": -6.707477,
+        "lng": -79.905698
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "lambayeque.png",
+      "archivo_miniatura": "lambayeque_thumb.png",
+      "orientacion_dominante": 0,
+      "proporcion_dominante": 0.1111111111111111
+    },
+    {
+      "id": "tingo_maria",
+      "nombre": "TINGO MARIA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 59401,
+      "segmentos_calles": 2549,
+      "ubicacion": {
+        "lat": -9.299099,
+        "lng": -76.001326
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "tingo_maria.png",
+      "archivo_miniatura": "tingo_maria_thumb.png",
+      "orientacion_dominante": 300,
+      "proporcion_dominante": 0.05256963515103962
+    },
+    {
+      "id": "cerro_de_pasco",
+      "nombre": "CERRO DE PASCO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 57955,
+      "segmentos_calles": 4490,
+      "ubicacion": {
+        "lat": -10.67815,
+        "lng": -76.255458
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "cerro_de_pasco.png",
+      "archivo_miniatura": "cerro_de_pasco_thumb.png",
+      "orientacion_dominante": 200,
+      "proporcion_dominante": 0.059465478841870825
+    },
+    {
+      "id": "andahuaylas",
+      "nombre": "ANDAHUAYLAS",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 57823,
+      "segmentos_calles": 3312,
+      "ubicacion": {
+        "lat": -13.657411,
+        "lng": -73.403577
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "andahuaylas.png",
+      "archivo_miniatura": "andahuaylas_thumb.png",
+      "orientacion_dominante": 180,
+      "proporcion_dominante": 0.08182367149758454
+    },
+    {
+      "id": "moyobamba",
+      "nombre": "MOYOBAMBA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 49520,
+      "segmentos_calles": 3789,
+      "ubicacion": {
+        "lat": -6.037126,
+        "lng": -76.976032
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "moyobamba.png",
+      "archivo_miniatura": "moyobamba_thumb.png",
+      "orientacion_dominante": 90,
+      "proporcion_dominante": 0.05040907891264186
+    },
+    {
+      "id": "catacaos",
+      "nombre": "CATACAOS",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 49344,
+      "segmentos_calles": 2777,
+      "ubicacion": {
+        "lat": -5.262363,
+        "lng": -80.668253
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "catacaos.png",
+      "archivo_miniatura": "catacaos_thumb.png",
+      "orientacion_dominante": 200,
+      "proporcion_dominante": 0.12963629816348576
+    },
+    {
+      "id": "huancavelica",
+      "nombre": "HUANCAVELICA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 48905,
+      "segmentos_calles": 1915,
+      "ubicacion": {
+        "lat": -12.78212,
+        "lng": -74.975105
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huancavelica.png",
+      "archivo_miniatura": "huancavelica_thumb.png",
+      "orientacion_dominante": 280,
+      "proporcion_dominante": 0.062140992167101824
+    },
+    {
+      "id": "ferrenafe",
+      "nombre": "FERREÑAFE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 46612,
+      "segmentos_calles": 2821,
+      "ubicacion": {
+        "lat": -6.637189,
+        "lng": -79.790421
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "ferrenafe.png",
+      "archivo_miniatura": "ferrenafe_thumb.png",
+      "orientacion_dominante": 190,
+      "proporcion_dominante": 0.09145693016660758
+    },
+    {
+      "id": "el_pedregal",
+      "nombre": "EL PEDREGAL",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 46536,
+      "segmentos_calles": 8658,
+      "ubicacion": {
+        "lat": -16.347763,
+        "lng": -72.211132
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "el_pedregal.png",
+      "archivo_miniatura": "el_pedregal_thumb.png",
+      "orientacion_dominante": 30,
+      "proporcion_dominante": 0.08085008085008084
+    },
+    {
+      "id": "sicuani",
+      "nombre": "SICUANI",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 45695,
+      "segmentos_calles": 3142,
+      "ubicacion": {
+        "lat": -14.264472,
+        "lng": -71.230654
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "sicuani.png",
+      "archivo_miniatura": "sicuani_thumb.png",
+      "orientacion_dominante": 350,
+      "proporcion_dominante": 0.051559516231699555
+    },
+    {
+      "id": "nasca",
+      "nombre": "NASCA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 44531,
+      "segmentos_calles": 4573,
+      "ubicacion": {
+        "lat": -14.845406,
+        "lng": -74.947988
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "nasca.png",
+      "archivo_miniatura": "nasca_thumb.png",
+      "orientacion_dominante": 320,
+      "proporcion_dominante": 0.103214520008747
+    },
+    {
+      "id": "la_arena",
+      "nombre": "LA ARENA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 44324,
+      "segmentos_calles": 2662,
+      "ubicacion": {
+        "lat": -5.370916,
+        "lng": -80.725653
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "la_arena.png",
+      "archivo_miniatura": "la_arena_thumb.png",
+      "orientacion_dominante": 10,
+      "proporcion_dominante": 0.10818933132982719
+    },
+    {
+      "id": "bajo_pichanaqui",
+      "nombre": "BAJO PICHANAQUI",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 42229,
+      "segmentos_calles": 3208,
+      "ubicacion": {
+        "lat": -10.925133,
+        "lng": -74.877472
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "bajo_pichanaqui.png",
+      "archivo_miniatura": "bajo_pichanaqui_thumb.png",
+      "orientacion_dominante": 310,
+      "proporcion_dominante": 0.1433915211970075
+    },
+    {
+      "id": "huamachuco",
+      "nombre": "HUAMACHUCO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 41391,
+      "segmentos_calles": 1997,
+      "ubicacion": {
+        "lat": -7.816864,
+        "lng": -78.044881
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huamachuco.png",
+      "archivo_miniatura": "huamachuco_thumb.png",
+      "orientacion_dominante": 290,
+      "proporcion_dominante": 0.08462694041061593
+    },
+    {
+      "id": "chulucanas",
+      "nombre": "CHULUCANAS",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 40635,
+      "segmentos_calles": 2351,
+      "ubicacion": {
+        "lat": -5.096401,
+        "lng": -80.163976
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "chulucanas.png",
+      "archivo_miniatura": "chulucanas_thumb.png",
+      "orientacion_dominante": 110,
+      "proporcion_dominante": 0.14036580178647384
+    },
+    {
+      "id": "tarma",
+      "nombre": "TARMA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 40488,
+      "segmentos_calles": 1511,
+      "ubicacion": {
+        "lat": -11.414256,
+        "lng": -75.689606
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "tarma.png",
+      "archivo_miniatura": "tarma_thumb.png",
+      "orientacion_dominante": 180,
+      "proporcion_dominante": 0.08206485771012574
+    },
+    {
+      "id": "chepen",
+      "nombre": "CHEPEN",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 37244,
+      "segmentos_calles": 2188,
+      "ubicacion": {
+        "lat": -7.226025,
+        "lng": -79.427407
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "chepen.png",
+      "archivo_miniatura": "chepen_thumb.png",
+      "orientacion_dominante": 220,
+      "proporcion_dominante": 0.06581352833638025
+    },
+    {
+      "id": "zarumilla",
+      "nombre": "ZARUMILLA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 36525,
+      "segmentos_calles": 3503,
+      "ubicacion": {
+        "lat": -3.494885,
+        "lng": -80.270934
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "zarumilla.png",
+      "archivo_miniatura": "zarumilla_thumb.png",
+      "orientacion_dominante": 220,
+      "proporcion_dominante": 0.11333143020268341
+    },
+    {
+      "id": "chancay",
+      "nombre": "CHANCAY",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 35303,
+      "segmentos_calles": 2362,
+      "ubicacion": {
+        "lat": -11.572926,
+        "lng": -77.265816
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "chancay.png",
+      "archivo_miniatura": "chancay_thumb.png",
+      "orientacion_dominante": 330,
+      "proporcion_dominante": 0.07281964436917866
+    },
+    {
+      "id": "sechura",
+      "nombre": "SECHURA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 32676,
+      "segmentos_calles": 3960,
+      "ubicacion": {
+        "lat": -5.568726,
+        "lng": -80.815495
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "sechura.png",
+      "archivo_miniatura": "sechura_thumb.png",
+      "orientacion_dominante": 290,
+      "proporcion_dominante": 0.06767676767676768
+    },
+    {
+      "id": "bagua_grande",
+      "nombre": "BAGUA GRANDE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 32091,
+      "segmentos_calles": 2960,
+      "ubicacion": {
+        "lat": -5.760376,
+        "lng": -78.442606
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "bagua_grande.png",
+      "archivo_miniatura": "bagua_grande_thumb.png",
+      "orientacion_dominante": 130,
+      "proporcion_dominante": 0.13445945945945945
+    },
+    {
+      "id": "chachapoyas",
+      "nombre": "CHACHAPOYAS",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 31722,
+      "segmentos_calles": 2283,
+      "ubicacion": {
+        "lat": -6.228533,
+        "lng": -77.866184
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "chachapoyas.png",
+      "archivo_miniatura": "chachapoyas_thumb.png",
+      "orientacion_dominante": 180,
+      "proporcion_dominante": 0.09286027157249234
+    },
+    {
+      "id": "casma",
+      "nombre": "CASMA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 31490,
+      "segmentos_calles": 3413,
+      "ubicacion": {
+        "lat": -9.464587,
+        "lng": -78.295218
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "casma.png",
+      "archivo_miniatura": "casma_thumb.png",
+      "orientacion_dominante": 40,
+      "proporcion_dominante": 0.10049809551714034
+    },
+    {
+      "id": "huanta",
+      "nombre": "HUANTA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 31303,
+      "segmentos_calles": 1630,
+      "ubicacion": {
+        "lat": -12.938536,
+        "lng": -74.248114
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huanta.png",
+      "archivo_miniatura": "huanta_thumb.png",
+      "orientacion_dominante": 310,
+      "proporcion_dominante": 0.07975460122699386
+    },
+    {
+      "id": "pacasmayo",
+      "nombre": "PACASMAYO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 29249,
+      "segmentos_calles": 2611,
+      "ubicacion": {
+        "lat": -7.406049,
+        "lng": -79.559105
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "pacasmayo.png",
+      "archivo_miniatura": "pacasmayo_thumb.png",
+      "orientacion_dominante": 40,
+      "proporcion_dominante": 0.07085407889697434
+    },
+    {
+      "id": "jauja",
+      "nombre": "JAUJA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 29101,
+      "segmentos_calles": 2056,
+      "ubicacion": {
+        "lat": -11.778636,
+        "lng": -75.491238
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "jauja.png",
+      "archivo_miniatura": "jauja_thumb.png",
+      "orientacion_dominante": 150,
+      "proporcion_dominante": 0.0963035019455253
+    },
+    {
+      "id": "juanjui",
+      "nombre": "JUANJUI",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 29043,
+      "segmentos_calles": 1941,
+      "ubicacion": {
+        "lat": -7.177824,
+        "lng": -76.732129
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "juanjui.png",
+      "archivo_miniatura": "juanjui_thumb.png",
+      "orientacion_dominante": 180,
+      "proporcion_dominante": 0.09015971148892324
+    },
+    {
+      "id": "yauri",
+      "nombre": "YAURI",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 28401,
+      "segmentos_calles": 4173,
+      "ubicacion": {
+        "lat": -14.793002,
+        "lng": -71.410214
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "yauri.png",
+      "archivo_miniatura": "yauri_thumb.png",
+      "orientacion_dominante": 150,
+      "proporcion_dominante": 0.044811885933381264
+    },
+    {
+      "id": "mala",
+      "nombre": "MALA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 27258,
+      "segmentos_calles": 1137,
+      "ubicacion": {
+        "lat": -12.661109,
+        "lng": -76.627798
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "mala.png",
+      "archivo_miniatura": "mala_thumb.png",
+      "orientacion_dominante": 40,
+      "proporcion_dominante": 0.09146877748460862
+    },
+    {
+      "id": "nueva_cajamarca",
+      "nombre": "NUEVA CAJAMARCA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 27125,
+      "segmentos_calles": 2612,
+      "ubicacion": {
+        "lat": -5.937388,
+        "lng": -77.310134
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "nueva_cajamarca.png",
+      "archivo_miniatura": "nueva_cajamarca_thumb.png",
+      "orientacion_dominante": 330,
+      "proporcion_dominante": 0.20367534456355282
+    },
+    {
+      "id": "tupac_amaru",
+      "nombre": "TUPAC AMARU",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 27032,
+      "segmentos_calles": 2141,
+      "ubicacion": {
+        "lat": -13.709556,
+        "lng": -76.149632
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "tupac_amaru.png",
+      "archivo_miniatura": "tupac_amaru_thumb.png",
+      "orientacion_dominante": 10,
+      "proporcion_dominante": 0.12237272302662307
+    },
+    {
+      "id": "la_merced",
+      "nombre": "LA MERCED",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 25560,
+      "segmentos_calles": 1185,
+      "ubicacion": {
+        "lat": -11.060482,
+        "lng": -75.331867
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "la_merced.png",
+      "archivo_miniatura": "la_merced_thumb.png",
+      "orientacion_dominante": 170,
+      "proporcion_dominante": 0.0540084388185654
+    },
+    {
+      "id": "satipo",
+      "nombre": "SATIPO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 24865,
+      "segmentos_calles": 1572,
+      "ubicacion": {
+        "lat": -11.250631,
+        "lng": -74.638994
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "satipo.png",
+      "archivo_miniatura": "satipo_thumb.png",
+      "orientacion_dominante": 130,
+      "proporcion_dominante": 0.15394402035623408
+    },
+    {
+      "id": "bagua",
+      "nombre": "BAGUA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 24509,
+      "segmentos_calles": 1925,
+      "ubicacion": {
+        "lat": -5.636683,
+        "lng": -78.528897
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "bagua.png",
+      "archivo_miniatura": "bagua_thumb.png",
+      "orientacion_dominante": 130,
+      "proporcion_dominante": 0.16155844155844157
+    },
+    {
+      "id": "san_clemente",
+      "nombre": "SAN CLEMENTE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 24337,
+      "segmentos_calles": 2184,
+      "ubicacion": {
+        "lat": -13.675636,
+        "lng": -76.154338
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "san_clemente.png",
+      "archivo_miniatura": "san_clemente_thumb.png",
+      "orientacion_dominante": 350,
+      "proporcion_dominante": 0.06822344322344322
+    },
+    {
+      "id": "tambo_grande",
+      "nombre": "TAMBO GRANDE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 23951,
+      "segmentos_calles": 1311,
+      "ubicacion": {
+        "lat": -4.927695,
+        "lng": -80.343233
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "tambo_grande.png",
+      "archivo_miniatura": "tambo_grande_thumb.png",
+      "orientacion_dominante": 110,
+      "proporcion_dominante": 0.06254767353165523
+    },
+    {
+      "id": "monsefu",
+      "nombre": "MONSEFU",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 23946,
+      "segmentos_calles": 1263,
+      "ubicacion": {
+        "lat": -6.875801,
+        "lng": -79.870664
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "monsefu.png",
+      "archivo_miniatura": "monsefu_thumb.png",
+      "orientacion_dominante": 0,
+      "proporcion_dominante": 0.14410134600158353
+    },
+    {
+      "id": "laredo",
+      "nombre": "LAREDO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 23828,
+      "segmentos_calles": 1249,
+      "ubicacion": {
+        "lat": -8.087319,
+        "lng": -78.958808
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "laredo.png",
+      "archivo_miniatura": "laredo_thumb.png",
+      "orientacion_dominante": 20,
+      "proporcion_dominante": 0.08166533226581266
+    },
+    {
+      "id": "mollendo",
+      "nombre": "MOLLENDO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 23509,
+      "segmentos_calles": 3889,
+      "ubicacion": {
+        "lat": -17.01837,
+        "lng": -72.01204
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "mollendo.png",
+      "archivo_miniatura": "mollendo_thumb.png",
+      "orientacion_dominante": 270,
+      "proporcion_dominante": 0.050141424530727695
+    },
+    {
+      "id": "san_ramon",
+      "nombre": "SAN RAMON",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 23226,
+      "segmentos_calles": 1430,
+      "ubicacion": {
+        "lat": -11.125327,
+        "lng": -75.358211
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "san_ramon.png",
+      "archivo_miniatura": "san_ramon_thumb.png",
+      "orientacion_dominante": 150,
+      "proporcion_dominante": 0.13076923076923078
+    },
+    {
+      "id": "tuman",
+      "nombre": "TUMAN",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 23164,
+      "segmentos_calles": 3109,
+      "ubicacion": {
+        "lat": -6.742936,
+        "lng": -79.70112
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "tuman.png",
+      "archivo_miniatura": "tuman_thumb.png",
+      "orientacion_dominante": 280,
+      "proporcion_dominante": 0.10260533933740752
+    },
+    {
+      "id": "requena",
+      "nombre": "REQUENA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 22708,
+      "segmentos_calles": 793,
+      "ubicacion": {
+        "lat": -5.062701,
+        "lng": -73.849598
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "requena.png",
+      "archivo_miniatura": "requena_thumb.png",
+      "orientacion_dominante": 20,
+      "proporcion_dominante": 0.05296343001261034
+    },
+    {
+      "id": "quillabamba",
+      "nombre": "QUILLABAMBA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 22214,
+      "segmentos_calles": 1755,
+      "ubicacion": {
+        "lat": -12.869901,
+        "lng": -72.694744
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "quillabamba.png",
+      "archivo_miniatura": "quillabamba_thumb.png",
+      "orientacion_dominante": 250,
+      "proporcion_dominante": 0.11168091168091168
+    },
+    {
+      "id": "chota",
+      "nombre": "CHOTA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 22081,
+      "segmentos_calles": 1094,
+      "ubicacion": {
+        "lat": -6.559877,
+        "lng": -78.65162
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "chota.png",
+      "archivo_miniatura": "chota_thumb.png",
+      "orientacion_dominante": 100,
+      "proporcion_dominante": 0.08592321755027423
+    },
+    {
+      "id": "rioja",
+      "nombre": "RIOJA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 22029,
+      "segmentos_calles": 1841,
+      "ubicacion": {
+        "lat": -6.063986,
+        "lng": -77.168967
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "rioja.png",
+      "archivo_miniatura": "rioja_thumb.png",
+      "orientacion_dominante": 70,
+      "proporcion_dominante": 0.0841933731667572
+    },
+    {
+      "id": "guadalupe",
+      "nombre": "GUADALUPE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 21857,
+      "segmentos_calles": 1858,
+      "ubicacion": {
+        "lat": -7.242783,
+        "lng": -79.469275
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "guadalupe.png",
+      "archivo_miniatura": "guadalupe_thumb.png",
+      "orientacion_dominante": 120,
+      "proporcion_dominante": 0.07804090419806244
+    },
+    {
+      "id": "ayaviri",
+      "nombre": "AYAVIRI",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 21430,
+      "segmentos_calles": 1994,
+      "ubicacion": {
+        "lat": -14.881425,
+        "lng": -70.591608
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "ayaviri.png",
+      "archivo_miniatura": "ayaviri_thumb.png",
+      "orientacion_dominante": 10,
+      "proporcion_dominante": 0.0757271815446339
+    },
+    {
+      "id": "san_martin_de_pangoa",
+      "nombre": "SAN MARTIN DE PANGOA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Selva",
+      "poblacion": 21406,
+      "segmentos_calles": 1754,
+      "ubicacion": {
+        "lat": -11.431453,
+        "lng": -74.487578
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "san_martin_de_pangoa.png",
+      "archivo_miniatura": "san_martin_de_pangoa_thumb.png",
+      "orientacion_dominante": 0,
+      "proporcion_dominante": 0.18244013683010263
+    },
+    {
+      "id": "la_oroya",
+      "nombre": "LA OROYA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 21381,
+      "segmentos_calles": 1496,
+      "ubicacion": {
+        "lat": -11.542256,
+        "lng": -75.930815
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "la_oroya.png",
+      "archivo_miniatura": "la_oroya_thumb.png",
+      "orientacion_dominante": 20,
+      "proporcion_dominante": 0.0427807486631016
+    },
+    {
+      "id": "cutervo",
+      "nombre": "CUTERVO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 21142,
+      "segmentos_calles": 1394,
+      "ubicacion": {
+        "lat": -6.382491,
+        "lng": -78.817823
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "cutervo.png",
+      "archivo_miniatura": "cutervo_thumb.png",
+      "orientacion_dominante": 340,
+      "proporcion_dominante": 0.07101865136298421
+    },
+    {
+      "id": "paijan",
+      "nombre": "PAIJAN",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 20802,
+      "segmentos_calles": 1729,
+      "ubicacion": {
+        "lat": -7.732242,
+        "lng": -79.300454
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "paijan.png",
+      "archivo_miniatura": "paijan_thumb.png",
+      "orientacion_dominante": 120,
+      "proporcion_dominante": 0.06651243493348756
+    },
+    {
+      "id": "huarmey",
+      "nombre": "HUARMEY",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 20402,
+      "segmentos_calles": 2350,
+      "ubicacion": {
+        "lat": -10.05803,
+        "lng": -78.15582
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "huarmey.png",
+      "archivo_miniatura": "huarmey_thumb.png",
+      "orientacion_dominante": 170,
+      "proporcion_dominante": 0.13914893617021276
+    },
+    {
+      "id": "ilave",
+      "nombre": "ILAVE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 20374,
+      "segmentos_calles": 2428,
+      "ubicacion": {
+        "lat": -16.083211,
+        "lng": -69.639422
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "ilave.png",
+      "archivo_miniatura": "ilave_thumb.png",
+      "orientacion_dominante": 20,
+      "proporcion_dominante": 0.08443163097199341
+    },
+    {
+      "id": "viru",
+      "nombre": "VIRU",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 20297,
+      "segmentos_calles": 934,
+      "ubicacion": {
+        "lat": -8.42093,
+        "lng": -78.764222
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "viru.png",
+      "archivo_miniatura": "viru_thumb.png",
+      "orientacion_dominante": 140,
+      "proporcion_dominante": 0.0867237687366167
+    },
+    {
+      "id": "azangaro",
+      "nombre": "AZANGARO",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Sierra",
+      "poblacion": 20084,
+      "segmentos_calles": 1775,
+      "ubicacion": {
+        "lat": -14.913274,
+        "lng": -70.197752
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "azangaro.png",
+      "archivo_miniatura": "azangaro_thumb.png",
+      "orientacion_dominante": 350,
+      "proporcion_dominante": 0.10535211267605633
+    },
+    {
+      "id": "casa_grande",
+      "nombre": "CASA GRANDE",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 19061,
+      "segmentos_calles": 1425,
+      "ubicacion": {
+        "lat": -7.745564,
+        "lng": -79.186597
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "casa_grande.png",
+      "archivo_miniatura": "casa_grande_thumb.png",
+      "orientacion_dominante": 210,
+      "proporcion_dominante": 0.17964912280701753
+    },
+    {
+      "id": "paramonga",
+      "nombre": "PARAMONGA",
+      "departamento": "",
+      "provincia": "",
+      "region_natural": "Costa",
+      "poblacion": 18465,
+      "segmentos_calles": 1245,
+      "ubicacion": {
+        "lat": -10.677787,
+        "lng": -77.82032
+      },
+      "tiene_datos": true,
+      "archivo_grafico": "paramonga.png",
+      "archivo_miniatura": "paramonga_thumb.png",
+      "orientacion_dominante": 230,
+      "proporcion_dominante": 0.08273092369477912
+    }
+  ],
+  "estadisticas": {
+    "total_ciudades": 92,
+    "ciudades_con_datos": 91,
+    "ciudades_sin_datos": 1,
+    "total_segmentos": 1013749,
+    "poblacion_total": 19220602,
+    "poblacion_promedio": 208919
+  },
+  "regiones_naturales": [
+    "Costa",
+    "Selva",
+    "Sierra"
+  ],
+  "departamentos": [],
+  "actualizado": "2025-12-05T18:46:57.666814",
+  "fuente": "OpenStreetMap via OSMNx",
+  "procesado_por": "dataprep_web_data.py"
+}
