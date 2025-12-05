@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orientación de calles del Perú</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Orientación de la red de calles de las principales ciudades del Perú</h1>
+    <nav>
+      <button id="btnInicio">Inicio</button>
+      <button id="btnGaleria">Galería</button>
+      <button id="btnDescargas">Descargas</button>
+    </nav>
+  </header>
+  <main>
+    <section id="inicio" class="visible">
+      <div id="intro"></div>
+      <h2>Destacados</h2>
+      <div id="destacados" class="galeria"></div>
+      <h2>Galería completa</h2>
+      <div id="galeria-completa" class="galeria"></div>
+    </section>
+    <section id="galeria" class="hidden">
+      <h2>Galería de ciudades</h2>
+      <div id="filtros"></div>
+      <div id="galeria-filtrada" class="galeria"></div>
+    </section>
+    <section id="descargas" class="hidden">
+      <h2>Descargas</h2>
+      <div id="descarga-filtros"></div>
+      <div id="descarga-preview"></div>
+      <div id="descarga-opciones"></div>
+      <div id="descarga-cita">
+        <strong>Cita recomendada:</strong>
+        <blockquote>Rojas-Quiroz, J. (2024). Orientación de la red de calles de las principales ciudades del Perú (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.13918305</blockquote>
+      </div>
+    </section>
+  </main>
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" id="modal-close">&times;</span>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+  <footer>
+    <p>Desarrollado por Rojas-Quiroz, J. | Datos: OpenStreetMap &amp; OSMNx | Web estática para GitHub Pages</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

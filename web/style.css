@@ -1,0 +1,195 @@
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f9fa;
+  color: #222;
+  margin: 0;
+}
+header {
+  background: #2E86AB;
+  color: #fff;
+  padding: 1.2em 0 1em 0;
+  text-align: center;
+  box-shadow: 0 2px 8px #0001;
+}
+header h1 {
+  margin: 0 0 0.5em 0;
+  font-size: 2em;
+}
+nav button {
+  background: #fff;
+  color: #2E86AB;
+  border: none;
+  margin: 0 0.5em;
+  padding: 0.5em 1.2em;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+nav button:hover {
+  background: #F7DC6F;
+}
+main {
+  max-width: 1100px;
+  margin: 2em auto;
+  padding: 0 1em;
+}
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2em;
+  justify-content: flex-start;
+}
+.galeria .ciudad {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0002;
+  padding: 0.7em 0.7em 0.5em 0.7em;
+  width: 170px;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.galeria .ciudad:hover {
+  box-shadow: 0 4px 16px #2E86AB33;
+  transform: translateY(-2px) scale(1.03);
+}
+.ciudad img {
+  width: 140px;
+  height: 105px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f0f0f0;
+}
+.ciudad .nombre {
+  font-weight: bold;
+  margin: 0.5em 0 0.2em 0;
+  font-size: 1.05em;
+}
+.ciudad .region {
+  font-size: 0.95em;
+  color: #2E86AB;
+}
+.ciudad .poblacion {
+  font-size: 0.9em;
+  color: #555;
+}
+section {
+  margin-bottom: 2em;
+}
+section.hidden {
+  display: none;
+}
+section.visible {
+  display: block;
+}
+#filtros, #descarga-filtros {
+  margin-bottom: 1.2em;
+  background: #eaf6fb;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px #0001;
+}
+.filtro-group {
+  margin-bottom: 0.7em;
+}
+.filtro-group label {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+.filtro-group .checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7em;
+}
+.filtro-group input[type="checkbox"] {
+  accent-color: #2E86AB;
+}
+#descarga-opciones button {
+  background: #2E86AB;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  padding: 0.6em 1.5em;
+  margin: 0.5em 0.7em 0.5em 0;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#descarga-opciones button:hover {
+  background: #F7DC6F;
+  color: #2E86AB;
+}
+#descarga-cita {
+  margin-top: 1.5em;
+  background: #fffbe6;
+  border-left: 5px solid #F7DC6F;
+  padding: 1em;
+  border-radius: 8px;
+  font-size: 1em;
+}
+footer {
+  background: #eaf6fb;
+  color: #222;
+  text-align: center;
+  padding: 1em 0;
+  font-size: 0.95em;
+  margin-top: 2em;
+  border-top: 1px solid #d0e3f0;
+}
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #0007;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2em 2em 1em 2em;
+  max-width: 480px;
+  box-shadow: 0 8px 32px #2E86AB44;
+  position: relative;
+}
+.modal-content .close {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  font-size: 1.7em;
+  color: #2E86AB;
+  cursor: pointer;
+}
+#modal-body img {
+  width: 100%;
+  max-width: 340px;
+  margin-bottom: 1em;
+  border-radius: 10px;
+  background: #f0f0f0;
+}
+#modal-body .metadatos {
+  font-size: 1em;
+  margin-bottom: 1em;
+}
+#modal-body .descargar {
+  display: block;
+  margin-top: 1em;
+  background: #2E86AB;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 0.6em 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#modal-body .descargar:hover {
+  background: #F7DC6F;
+  color: #2E86AB;
+}
