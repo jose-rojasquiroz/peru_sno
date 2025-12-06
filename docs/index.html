@@ -534,7 +534,7 @@
     </footer>
 
     <script>
-        const DATA_PATH = 'data/';
+        const DATA_PATH = './data/';
         let allCities = [];
         let selectedCities = new Set();
 
@@ -562,8 +562,8 @@
             card.className = 'city-showcase';
             const fileBase = cityFileBase(city.nombre);
             
-            const polarImg = `graficos/${fileBase}_polar.png`;
-            const mapImg = `mapas/${fileBase}_mapa.png`;
+            const polarImg = `./graficos/${fileBase}_polar.png`;
+            const mapImg = `./mapas/${fileBase}_mapa.png`;
             
             card.innerHTML = `
                 <div class="showcase-header">
@@ -708,7 +708,7 @@
             selectedCities.forEach(cityName => {
                 const fileBase = cityFileBase(cityName);
                 const link = document.createElement('a');
-                link.href = `fichas/${fileBase}_ficha.png`;
+                link.href = `./fichas/${fileBase}_ficha.png`;
                 link.download = `${cityName}_ficha.png`;
                 link.click();
             });
