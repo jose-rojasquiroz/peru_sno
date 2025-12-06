@@ -64,7 +64,7 @@ def create_street_map(graph, city_name, region, output_path, map_extent=None):
         ox.plot_graph(graph, ax=ax, node_size=0, edge_color='#333333', 
                       edge_linewidth=0.5, bgcolor='white', show=False, close=False)
         if map_extent:
-            zoomed = zoom_extent(map_extent, factor=1/1.5)
+            zoomed = zoom_extent(map_extent, factor=1/1.6)
             xmin, xmax, ymin, ymax = zoomed
             ax.set_xlim(xmin, xmax)
             ax.set_ylim(ymin, ymax)
@@ -74,7 +74,7 @@ def create_street_map(graph, city_name, region, output_path, map_extent=None):
         ax.set_axis_off()
         
         plt.tight_layout()
-        plt.savefig(output_path, dpi=600, bbox_inches='tight', facecolor='white')
+        plt.savefig(output_path, dpi=600, bbox_inches='tight', facecolor='none', transparent=True)
         plt.close()
         
         print(f"  ✓ Mapa guardado: {output_path.name}")
@@ -111,25 +111,47 @@ def create_polar_plot(bearings, city_name, region, output_path):
     print(f"  ✓ Gráfico guardado: {output_path.name}")
 
 def create_ficha(city_data, bearings, graph, output_path, map_extent=None):
-    """Crea una ficha completa (imagen) de la ciudad con mapa de calles"""
-    fig = plt.figure(figsize=(16, 10))
-    gs = fig.add_gridspec(2, 3, width_ratios=[1.2, 1, 1], height_ratios=[1, 1], 
-                          hspace=0.3, wspace=0.3)
+    """Crea una ficha completa con dimensiones precisas en cm."""
+    # Dimensiones en cm (convertidas a pulgadas)
+    width_cm = 24.16
+    height_cm = 19.05
+    dpi = 600
+    fig = plt.figure(figsize=(width_cm/2.54, height_cm/2.54), dpi=dpi)
+    fig.patch.set_facecolor('white')
     
-    color = COLORES[city_data['REGNAT']]
+    # Márgenes y áreas (en fracción de figura)
+    title_h = 2.05 / height_cm
+    map_h = 15.64 / height_cm
+    map_w = 14.64 / width_cm  # Reducido 1 cm desde 15.64
+    polar_h = 8.56 / height_cm
+    polar_w = 8.52 / width_cm
+    info_h = 2.05 / height_cm
+    gap_below_polar = 0.98 / height_cm
+    gap_top_polar = 1.96 / height_cm  # Bajada adicional del gráfico polar
     
-    # Título principal
-    fig.suptitle(f"{city_data['CIUDAD']}", fontsize=28, fontweight='bold', y=0.98)
+    # Alineación derecha para el gráfico polar e info (pegado al borde derecho)
+    polar_x = 1 - polar_w
     
     base_crs = graph.graph.get('crs', 'EPSG:4326') if hasattr(graph, 'graph') else 'EPSG:4326'
-
-    # MAPA DE CALLES (izquierda, ocupa 2 filas)
-    ax_mapa = fig.add_subplot(gs[:, 0])
+    
+    # TÍTULO (centrado en toda la anchura)
+    ax_title = fig.add_axes([0, 1 - title_h, 1, title_h])
+    ax_title.axis('off')
+    city_name = city_data['CIUDAD']
+    city_name_formatted = ' '.join(word.capitalize() for word in city_name.split())
+    ax_title.text(0.5, 0.5, city_name_formatted, fontsize=32, fontweight='bold',
+                  ha='center', va='center', transform=ax_title.transAxes)
+    
+    # MAPA DE CALLES (izquierda)
+    ax_mapa = fig.add_axes([0, 1 - title_h - map_h, map_w, map_h])
+    # Reducir ancho de líneas para Lima Metropolitana
+    is_lima = city_data['CIUDAD'].upper() == 'LIMA METROPOLITANA'
+    linewidth = 0.5 / 3 if is_lima else 0.5
     try:
-        ox.plot_graph(graph, ax=ax_mapa, node_size=0, edge_color='#333333', 
-                      edge_linewidth=0.5, bgcolor='white', show=False, close=False)
+        ox.plot_graph(graph, ax=ax_mapa, node_size=0, edge_color='#333333',
+                      edge_linewidth=linewidth, bgcolor='white', show=False, close=False)
         if map_extent:
-            zoomed = zoom_extent(map_extent, factor=1/1.5)
+            zoomed = zoom_extent(map_extent, factor=1/1.6)
             xmin, xmax, ymin, ymax = zoomed
             ax_mapa.set_xlim(xmin, xmax)
             ax_mapa.set_ylim(ymin, ymax)
@@ -139,57 +161,36 @@ def create_ficha(city_data, bearings, graph, output_path, map_extent=None):
         ax_mapa.text(0.5, 0.5, 'Mapa no disponible', ha='center', va='center')
         ax_mapa.set_axis_off()
     
-    # GRÁFICO POLAR (centro arriba)
-    ax_polar = fig.add_subplot(gs[0, 1], projection='polar')
+    # GRÁFICO POLAR (derecha, arriba, con bajada de 1.96 cm)
+    ax_polar = fig.add_axes([polar_x, 1 - title_h - gap_top_polar - polar_h, polar_w, polar_h],
+                            projection='polar')
+    color = COLORES[city_data['REGNAT']]
     direcciones = ['N', '', 'E', '', 'S', '', 'O', '']
-    ax_polar.hist(np.deg2rad(bearings), bins=36, color=color, alpha=0.75, 
+    ax_polar.hist(np.deg2rad(bearings), bins=36, color=color, alpha=0.75,
                   edgecolor='white', linewidth=1)
     ax_polar.set_theta_zero_location('N')
     ax_polar.set_theta_direction(-1)
     ax_polar.set_yticklabels([])
     ax_polar.set_xticks(np.pi / 180.0 * np.linspace(0, 360, 8, endpoint=False))
-    ax_polar.set_xticklabels(direcciones, fontsize=11, fontweight='bold')
+    ax_polar.set_xticklabels(direcciones, fontsize=10, fontweight='bold')
+    ax_polar.patch.set_facecolor('white')
     
-    # INFORMACIÓN BÁSICA (derecha arriba)
-    ax_info = fig.add_subplot(gs[0, 2])
+    # INFORMACIÓN (derecha, abajo del gráfico polar)
+    ax_info = fig.add_axes([polar_x, 1 - title_h - gap_top_polar - polar_h - gap_below_polar - info_h,
+                            polar_w, info_h])
     ax_info.axis('off')
+    poblacion_int = int(city_data['POB17'])
+    info_text = f"""Población: {poblacion_int:,} habitantes
+Área urbana: {city_data['area_km2']:.0f} km²
+Densidad: {city_data['densidad']:.0f} hab/km²"""
+    ax_info.text(0.5, 0.5, info_text, fontsize=11, ha='center', va='center',
+                 transform=ax_info.transAxes, family='monospace')
     
-    info_text = f"""
-REGIÓN
-{city_data['REGNAT']}
-
-DEPARTAMENTO
-{city_data['DEPARTAMENTO']}
-
-PROVINCIA
-{city_data['PROVINCIA']}
-
-POBLACIÓN (2017)
-{city_data['POB17']:,} hab
-
-ÁREA
-{city_data['area_km2']:.2f} km²
-
-DENSIDAD
-{city_data['densidad']:.0f} hab/km²
-"""
+    # FOOTER
+    fig.text(0.5, 0.01, 'Elaborado por José Rojas-Quiroz | Datos: INEI 2017, OpenStreetMap y OSMnx',
+             ha='center', fontsize=9, color='gray')
     
-    ax_info.text(0.1, 0.5, info_text, fontsize=11, verticalalignment='center',
-                 family='monospace', bbox=dict(boxstyle='round', facecolor=color, alpha=0.15))
-    
-    # TOTAL DE SEGMENTOS (centro abajo)
-    ax_stats = fig.add_subplot(gs[1, 1:])
-    ax_stats.axis('off')
-    stats_text = f"TOTAL DE SEGMENTOS: {len(bearings):,}"
-    ax_stats.text(0.1, 0.5, stats_text, fontsize=14, fontweight='bold',
-                  verticalalignment='center', family='monospace',
-                  bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.3))
-    
-    # Footer
-    fig.text(0.5, 0.01, 'Elaborado por José Rojas-Quiroz | Datos: INEI 2017, OpenStreetMap', 
-             ha='center', fontsize=10, color='gray')
-    
-    plt.savefig(output_path, dpi=600, bbox_inches='tight', facecolor='white')
+    plt.savefig(output_path, dpi=dpi, bbox_inches='tight', facecolor='white')
     plt.close()
     
     print(f"  ✓ Ficha guardada: {output_path.name}")
@@ -253,22 +254,22 @@ def select_top_cities(gdf):
 
 
 def assign_scale_group(gdf):
-    """Divide en 5 grupos de escala: grupo 5 exclusivo para Lima Metropolitana; grupos 1-4 por cuantiles sin Lima."""
+    """Divide en 5 grupos de escala: grupo 5 exclusivo para Lima Metropolitana; grupos 1-4 por cuantiles de área sin Lima."""
     gdf = gdf.copy()
     mask_lima = gdf['CIUDAD'].str.upper() == 'LIMA METROPOLITANA'
 
     gdf_no_lima = gdf[~mask_lima]
-    q25, q50, q75 = gdf_no_lima['POB17'].quantile([0.25, 0.50, 0.75])
+    q25, q50, q75 = gdf_no_lima['area_km2'].quantile([0.25, 0.50, 0.75])
 
     def group_row(row):
         if row['CIUDAD'].upper() == 'LIMA METROPOLITANA':
             return 5
-        pop = row['POB17']
-        if pop >= q75:
+        area = row['area_km2']
+        if area >= q75:
             return 1
-        if pop >= q50:
+        if area >= q50:
             return 2
-        if pop >= q25:
+        if area >= q25:
             return 3
         return 4
 
