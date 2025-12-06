@@ -534,7 +534,7 @@
     </footer>
 
     <script>
-        const DATA_PATH = './data/';
+        const DATA_PATH = `${BASE_URL}data/`;
         let allCities = [];
         let selectedCities = new Set();
 
@@ -561,9 +561,9 @@
             const card = document.createElement('div');
             card.className = 'city-showcase';
             const fileBase = cityFileBase(city.nombre);
-            
-            const polarImg = `graficos/${fileBase}_polar.png`;
-            const mapImg = `mapas/${fileBase}_mapa.png`;
+            const BASE_URL = 'https://jose-rojasquiroz.github.io/peru_sno/docs/';
+            const polarImg = `${BASE_URL}graficos/${fileBase}_polar.png`;
+            const mapImg   = `${BASE_URL}mapas/${fileBase}_mapa.png`;
             
             card.innerHTML = `
                 <div class="showcase-header">
@@ -708,7 +708,7 @@
             selectedCities.forEach(cityName => {
                 const fileBase = cityFileBase(cityName);
                 const link = document.createElement('a');
-                link.href = `fichas/${fileBase}_ficha.png`;
+                link.href = `${BASE_URL}fichas/${fileBase}_ficha.png`;
                 link.download = `${cityName}_ficha.png`;
                 link.click();
             });
