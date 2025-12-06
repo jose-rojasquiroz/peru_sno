@@ -64,18 +64,17 @@ def create_street_map(graph, city_name, region, output_path, map_extent=None):
         ox.plot_graph(graph, ax=ax, node_size=0, edge_color='#333333', 
                       edge_linewidth=0.5, bgcolor='white', show=False, close=False)
         if map_extent:
-            xmin, xmax, ymin, ymax = map_extent
+            zoomed = zoom_extent(map_extent, factor=1/1.5)
+            xmin, xmax, ymin, ymax = zoomed
             ax.set_xlim(xmin, xmax)
             ax.set_ylim(ymin, ymax)
-        
-        ax.set_title(f'{city_name}\nRed de Calles', 
-                     fontsize=16, fontweight='bold', pad=20)
-        
+            add_scale_bar(ax, zoomed, graph.graph.get('crs', 'EPSG:4326') if hasattr(graph, 'graph') else 'EPSG:4326')
+
         # Remover ejes
         ax.set_axis_off()
         
         plt.tight_layout()
-        plt.savefig(output_path, dpi=150, bbox_inches='tight', facecolor='white')
+        plt.savefig(output_path, dpi=600, bbox_inches='tight', facecolor='white')
         plt.close()
         
         print(f"  ✓ Mapa guardado: {output_path.name}")
@@ -100,15 +99,13 @@ def create_polar_plot(bearings, city_name, region, output_path):
     ax.set_yticklabels([])
     ax.set_xticks(np.pi / 180.0 * np.linspace(0, 360, 8, endpoint=False))
     ax.set_xticklabels(direcciones, fontsize=14, fontweight='bold')
-    ax.set_title(f'{city_name}\nOrientación de Calles', 
-                 fontsize=16, fontweight='bold', pad=20)
     
     # Fondo transparente
     fig.patch.set_alpha(0.0)
     ax.patch.set_alpha(0.0)
     
     plt.tight_layout()
-    plt.savefig(output_path, dpi=150, bbox_inches='tight', transparent=True)
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', transparent=True)
     plt.close()
     
     print(f"  ✓ Gráfico guardado: {output_path.name}")
@@ -132,11 +129,11 @@ def create_ficha(city_data, bearings, graph, output_path, map_extent=None):
         ox.plot_graph(graph, ax=ax_mapa, node_size=0, edge_color='#333333', 
                       edge_linewidth=0.5, bgcolor='white', show=False, close=False)
         if map_extent:
-            xmin, xmax, ymin, ymax = map_extent
+            zoomed = zoom_extent(map_extent, factor=1/1.5)
+            xmin, xmax, ymin, ymax = zoomed
             ax_mapa.set_xlim(xmin, xmax)
             ax_mapa.set_ylim(ymin, ymax)
-            add_scale_bar(ax_mapa, map_extent, base_crs)
-        ax_mapa.set_title('Red de Calles', fontsize=14, fontweight='bold', pad=10)
+            add_scale_bar(ax_mapa, zoomed, base_crs)
         ax_mapa.set_axis_off()
     except:
         ax_mapa.text(0.5, 0.5, 'Mapa no disponible', ha='center', va='center')
@@ -152,7 +149,6 @@ def create_ficha(city_data, bearings, graph, output_path, map_extent=None):
     ax_polar.set_yticklabels([])
     ax_polar.set_xticks(np.pi / 180.0 * np.linspace(0, 360, 8, endpoint=False))
     ax_polar.set_xticklabels(direcciones, fontsize=11, fontweight='bold')
-    ax_polar.set_title('Orientación de Calles', fontsize=13, fontweight='bold', pad=15)
     
     # INFORMACIÓN BÁSICA (derecha arriba)
     ax_info = fig.add_subplot(gs[0, 2])
@@ -193,7 +189,7 @@ DENSIDAD
     fig.text(0.5, 0.01, 'Elaborado por José Rojas-Quiroz | Datos: INEI 2017, OpenStreetMap', 
              ha='center', fontsize=10, color='gray')
     
-    plt.savefig(output_path, dpi=200, bbox_inches='tight', facecolor='white')
+    plt.savefig(output_path, dpi=600, bbox_inches='tight', facecolor='white')
     plt.close()
     
     print(f"  ✓ Ficha guardada: {output_path.name}")
@@ -257,10 +253,17 @@ def select_top_cities(gdf):
 
 
 def assign_scale_group(gdf):
-    """Divide en 4 grupos por población (grupo 1 = más pobladas)."""
-    q25, q50, q75 = gdf['POB17'].quantile([0.25, 0.50, 0.75])
+    """Divide en 5 grupos de escala: grupo 5 exclusivo para Lima Metropolitana; grupos 1-4 por cuantiles sin Lima."""
+    gdf = gdf.copy()
+    mask_lima = gdf['CIUDAD'].str.upper() == 'LIMA METROPOLITANA'
 
-    def group_row(pop):
+    gdf_no_lima = gdf[~mask_lima]
+    q25, q50, q75 = gdf_no_lima['POB17'].quantile([0.25, 0.50, 0.75])
+
+    def group_row(row):
+        if row['CIUDAD'].upper() == 'LIMA METROPOLITANA':
+            return 5
+        pop = row['POB17']
         if pop >= q75:
             return 1
         if pop >= q50:
@@ -269,8 +272,7 @@ def assign_scale_group(gdf):
             return 3
         return 4
 
-    gdf = gdf.copy()
-    gdf['grupo_escala'] = gdf['POB17'].apply(group_row)
+    gdf['grupo_escala'] = gdf.apply(group_row, axis=1)
     return gdf
 
 
@@ -296,6 +298,16 @@ def build_map_extent(city_polygon, half_size_m, base_crs):
     bbox_wgs = gpd.GeoSeries([bbox_metric], crs='EPSG:32718').to_crs(base_crs)
     minx, miny, maxx, maxy = bbox_wgs.total_bounds
     return (minx, maxx, miny, maxy)
+
+
+def zoom_extent(extent, factor=1.0):
+    """Devuelve un extent escalado alrededor del centro (factor <1 acerca, >1 aleja)."""
+    xmin, xmax, ymin, ymax = extent
+    cx = (xmin + xmax) / 2
+    cy = (ymin + ymax) / 2
+    half_x = (xmax - xmin) / 2 * factor
+    half_y = (ymax - ymin) / 2 * factor
+    return (cx - half_x, cx + half_x, cy - half_y, cy + half_y)
 
 
 def choose_scale_length(width_m):
