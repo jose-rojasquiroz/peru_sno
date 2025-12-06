@@ -5,7 +5,7 @@ import osmnx as ox
 import matplotlib.pyplot as plt
 import json
 from pathlib import Path
-from shapely.geometry import box
+from shapely.geometry import box, LineString
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -124,6 +124,8 @@ def create_ficha(city_data, bearings, graph, output_path, map_extent=None):
     # Título principal
     fig.suptitle(f"{city_data['CIUDAD']}", fontsize=28, fontweight='bold', y=0.98)
     
+    base_crs = graph.graph.get('crs', 'EPSG:4326') if hasattr(graph, 'graph') else 'EPSG:4326'
+
     # MAPA DE CALLES (izquierda, ocupa 2 filas)
     ax_mapa = fig.add_subplot(gs[:, 0])
     try:
@@ -133,6 +135,7 @@ def create_ficha(city_data, bearings, graph, output_path, map_extent=None):
             xmin, xmax, ymin, ymax = map_extent
             ax_mapa.set_xlim(xmin, xmax)
             ax_mapa.set_ylim(ymin, ymax)
+            add_scale_bar(ax_mapa, map_extent, base_crs)
         ax_mapa.set_title('Red de Calles', fontsize=14, fontweight='bold', pad=10)
         ax_mapa.set_axis_off()
     except:
@@ -178,32 +181,12 @@ DENSIDAD
     ax_info.text(0.1, 0.5, info_text, fontsize=11, verticalalignment='center',
                  family='monospace', bbox=dict(boxstyle='round', facecolor=color, alpha=0.15))
     
-    # ESTADÍSTICAS DE ORIENTACIÓN (centro abajo)
+    # TOTAL DE SEGMENTOS (centro abajo)
     ax_stats = fig.add_subplot(gs[1, 1:])
     ax_stats.axis('off')
-    
-    # Calcular orientaciones principales
-    bins = np.linspace(0, 360, 37)
-    hist, _ = np.histogram(bearings, bins=bins)
-    orientaciones = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO']
-    orientaciones_completas = []
-    for i in range(8):
-        start_idx = i * 4
-        end_idx = start_idx + 5
-        count = hist[start_idx:end_idx].sum()
-        orientaciones_completas.append((orientaciones[i], count))
-    
-    orientaciones_completas.sort(key=lambda x: x[1], reverse=True)
-    
-    stats_text = "ORIENTACIONES PRINCIPALES\n\n"
-    for i, (orient, count) in enumerate(orientaciones_completas[:4], 1):
-        porcentaje = (count / len(bearings)) * 100
-        stats_text += f"{i}. {orient:3s}: {porcentaje:5.1f}%  ({count:,} segmentos)\n"
-    
-    stats_text += f"\nTOTAL DE SEGMENTOS: {len(bearings):,}"
-    
-    ax_stats.text(0.1, 0.5, stats_text, fontsize=12, verticalalignment='center',
-                  family='monospace',
+    stats_text = f"TOTAL DE SEGMENTOS: {len(bearings):,}"
+    ax_stats.text(0.1, 0.5, stats_text, fontsize=14, fontweight='bold',
+                  verticalalignment='center', family='monospace',
                   bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.3))
     
     # Footer
@@ -215,8 +198,8 @@ DENSIDAD
     
     print(f"  ✓ Ficha guardada: {output_path.name}")
 
-def process_city(idx, city_row, gdf_cities, map_extent):
-    """Procesa una ciudad individual"""
+def process_city(idx, city_row, gdf_cities, map_extent, is_top3=False):
+    """Procesa una ciudad individual. is_top3 define si se guardan mapa/gráfico individuales."""
     city_name = city_row['CIUDAD']
     city_polygon = city_row['geometry']
     region = city_row['REGNAT']
@@ -230,13 +213,15 @@ def process_city(idx, city_row, gdf_cities, map_extent):
         print(f"  ✗ Sin datos para {city_name}")
         return None
     
-    # Crear mapa de calles
-    mapa_path = OUTPUT_DIR / 'mapas' / f'{city_name.replace(" ", "_")}_mapa.png'
-    create_street_map(graph, city_name, region, mapa_path, map_extent)
-    
-    # Crear gráfico polar individual
-    polar_path = OUTPUT_DIR / 'graficos' / f'{city_name.replace(" ", "_")}_polar.png'
-    create_polar_plot(bearings, city_name, region, polar_path)
+    mapa_path = None
+    polar_path = None
+
+    # Solo guardar mapas/gráficos individuales para el top 3 por región (sin Lima Metropolitana)
+    if is_top3:
+        mapa_path = OUTPUT_DIR / 'mapas' / f'{city_name.replace(" ", "_")}_mapa.png'
+        polar_path = OUTPUT_DIR / 'graficos' / f'{city_name.replace(" ", "_")}_polar.png'
+        create_street_map(graph, city_name, region, mapa_path, map_extent)
+        create_polar_plot(bearings, city_name, region, polar_path)
     
     # Crear ficha completa (ahora incluye el mapa)
     ficha_path = OUTPUT_DIR / 'fichas' / f'{city_name.replace(" ", "_")}_ficha.png'
@@ -253,8 +238,8 @@ def process_city(idx, city_row, gdf_cities, map_extent):
         'densidad': float(city_row['densidad']),
         'bearings': [float(b) for b in bearings],
         'num_segmentos': len(bearings),
-        'mapa_calles': f'mapas/{city_name.replace(" ", "_")}_mapa.png',
-        'grafico_polar': f'graficos/{city_name.replace(" ", "_")}_polar.png',
+        'mapa_calles': f'mapas/{city_name.replace(" ", "_")}_mapa.png' if mapa_path else None,
+        'grafico_polar': f'graficos/{city_name.replace(" ", "_")}_polar.png' if polar_path else None,
         'ficha': f'fichas/{city_name.replace(" ", "_")}_ficha.png'
     }
     
@@ -271,12 +256,36 @@ def select_top_cities(gdf):
     return pd.concat(top_cities)
 
 
-def compute_common_half_extent_m(gdf_top):
-    """Calcula la mitad del lado del cuadro (en metros) que usaremos para todos los mapas."""
-    gdf_metric = gdf_top.to_crs('EPSG:32718')
-    bounds = gdf_metric.bounds
-    max_dim = np.maximum(bounds['maxx'] - bounds['minx'], bounds['maxy'] - bounds['miny'])
-    return max_dim.max() / 2
+def assign_scale_group(gdf):
+    """Divide en 4 grupos por población (grupo 1 = más pobladas)."""
+    q25, q50, q75 = gdf['POB17'].quantile([0.25, 0.50, 0.75])
+
+    def group_row(pop):
+        if pop >= q75:
+            return 1
+        if pop >= q50:
+            return 2
+        if pop >= q25:
+            return 3
+        return 4
+
+    gdf = gdf.copy()
+    gdf['grupo_escala'] = gdf['POB17'].apply(group_row)
+    return gdf
+
+
+def compute_group_half_extent_m(gdf):
+    """Calcula la mitad del lado del cuadro (en metros) por grupo de escala."""
+    half_extents = {}
+    gdf_metric = gdf.to_crs('EPSG:32718')
+    for grupo in sorted(gdf['grupo_escala'].unique()):
+        subset = gdf_metric[gdf_metric['grupo_escala'] == grupo]
+        if subset.empty:
+            continue
+        bounds = subset.bounds
+        max_dim = np.maximum(bounds['maxx'] - bounds['minx'], bounds['maxy'] - bounds['miny'])
+        half_extents[grupo] = max_dim.max() / 2
+    return half_extents
 
 
 def build_map_extent(city_polygon, half_size_m, base_crs):
@@ -287,6 +296,50 @@ def build_map_extent(city_polygon, half_size_m, base_crs):
     bbox_wgs = gpd.GeoSeries([bbox_metric], crs='EPSG:32718').to_crs(base_crs)
     minx, miny, maxx, maxy = bbox_wgs.total_bounds
     return (minx, maxx, miny, maxy)
+
+
+def choose_scale_length(width_m):
+    """Elige una longitud de barra de escala agradable basada en el ancho disponible."""
+    nice_km = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50]
+    target = width_m / 4
+    candidates = [k * 1000 for k in nice_km if k * 1000 <= target]
+    if candidates:
+        return max(candidates)
+    return min(nice_km) * 1000
+
+
+def add_scale_bar(ax, map_extent, base_crs):
+    """Dibuja una escala gráfica simple en la esquina inferior izquierda del mapa."""
+    if base_crs is None:
+        base_crs = 'EPSG:4326'
+    xmin, xmax, ymin, ymax = map_extent
+    bbox_wgs = box(xmin, ymin, xmax, ymax)
+    bbox_metric = gpd.GeoSeries([bbox_wgs], crs=base_crs).to_crs('EPSG:32718').iloc[0]
+    minx_m, miny_m, maxx_m, maxy_m = bbox_metric.bounds
+    width_m = maxx_m - minx_m
+    height_m = maxy_m - miny_m
+    bar_len_m = choose_scale_length(width_m)
+
+    x_start = minx_m + width_m * 0.05
+    y_pos = miny_m + height_m * 0.08
+    x_end = x_start + bar_len_m
+
+    line_metric = LineString([(x_start, y_pos), (x_end, y_pos)])
+    line_wgs = gpd.GeoSeries([line_metric], crs='EPSG:32718').to_crs(base_crs).iloc[0]
+    xs, ys = line_wgs.xy
+
+    height_deg = ymax - ymin
+    tick = height_deg * 0.01
+    text_offset = height_deg * 0.02
+
+    ax.plot(xs, ys, color='black', linewidth=2)
+    ax.plot([xs[0], xs[0]], [ys[0] - tick, ys[0] + tick], color='black', linewidth=1)
+    ax.plot([xs[1], xs[1]], [ys[1] - tick, ys[1] + tick], color='black', linewidth=1)
+
+    label_km = bar_len_m / 1000
+    label = f"{label_km:g} km"
+    ax.text((xs[0] + xs[1]) / 2, ys[0] + text_offset, label,
+            ha='center', va='bottom', fontsize=10, fontweight='bold')
 
 # ============================================================================
 # SCRIPT PRINCIPAL
@@ -309,17 +362,23 @@ def main():
     gdf_cities = calcular_densidad(gdf_cities)
     print(f"  ✓ Densidades calculadas")
 
-    # 2b. Seleccionar top 3 por región (excluyendo Lima Metropolitana)
-    gdf_top = select_top_cities(gdf_cities)
-    print(f"  ✓ Seleccionadas {len(gdf_top)} ciudades (top 3 por región, sin Lima Metropolitana)")
+    # 2b. Seleccionar top 3 por región (excluyendo Lima Metropolitana) para mapas/gráficos individuales
+    gdf_top3 = select_top_cities(gdf_cities)
+    top3_names = set(gdf_top3['CIUDAD'])
+    print(f"  ✓ Seleccionadas {len(gdf_top3)} ciudades (top 3 por región, sin Lima Metropolitana)")
 
-    # 2c. Calcular escala común para mapas con la ciudad más grande
-    common_half_extent_m = compute_common_half_extent_m(gdf_top)
-    map_extents = {
-        row['CIUDAD']: build_map_extent(row['geometry'], common_half_extent_m, gdf_cities.crs)
-        for _, row in gdf_top.iterrows()
-    }
-    print(f"  ✓ Extensión común calculada para mapas")
+    # 2c. Asignar grupos de escala por población (4 grupos, grupo 1 = ciudades más grandes)
+    gdf_cities = assign_scale_group(gdf_cities)
+    half_extents = compute_group_half_extent_m(gdf_cities)
+
+    # 2d. Calcular extensión por ciudad según su grupo
+    map_extents = {}
+    for _, row in gdf_cities.iterrows():
+        grupo = row['grupo_escala']
+        half = half_extents.get(grupo)
+        if half:
+            map_extents[row['CIUDAD']] = build_map_extent(row['geometry'], half, gdf_cities.crs)
+    print(f"  ✓ Extensiones calculadas por grupos de escala")
     
     # 3. Procesar ciudades
     print("\n[3/5] Procesando ciudades (descargando redes y generando gráficos/mapas)...")
@@ -329,9 +388,10 @@ def main():
     all_graphs = []
     
     # Procesamiento secuencial (más estable que paralelo para OSMnx)
-    for idx, (_, city_row) in enumerate(gdf_top.iterrows()):
+    for idx, (_, city_row) in enumerate(gdf_cities.iterrows()):
         city_extent = map_extents.get(city_row['CIUDAD'])
-        result = process_city(idx, city_row, gdf_top, city_extent)
+        is_top3 = city_row['CIUDAD'] in top3_names
+        result = process_city(idx, city_row, gdf_cities, city_extent, is_top3=is_top3)
         if result:
             city_data, graph = result
             all_city_data.append(city_data)
@@ -361,8 +421,8 @@ def main():
     print("\n[5/5] Exportando GeoPackages...")
     
     # GeoPackage de polígonos urbanos
-    gdf_export = gdf_top[['CIUDAD', 'POB17', 'REGNAT', 'DEPARTAMENTO', 
-                          'PROVINCIA', 'area_km2', 'densidad', 'geometry']].copy()
+    gdf_export = gdf_cities[['CIUDAD', 'POB17', 'REGNAT', 'DEPARTAMENTO', 
+                             'PROVINCIA', 'area_km2', 'densidad', 'geometry']].copy()
     gdf_export.to_file(OUTPUT_DIR / 'data' / 'poligonos_urbanos.gpkg', driver='GPKG')
     print("  ✓ poligonos_urbanos.gpkg")
     
