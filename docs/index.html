@@ -1,53 +1,535 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orientación de calles del Perú</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientación de calles en las principales ciudades del Perú</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-costa: #c7cb52;
+            --color-sierra: #98692e;
+            --color-selva: #62a162;
+            --color-text: #2c3e50;
+            --color-text-light: #7f8c8d;
+            --color-bg: #ffffff;
+            --color-bg-alt: #f8f9fa;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: var(--color-bg);
+        }
+
+        /* HEADER */
+        header {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* NAVIGATION */
+        nav {
+            max-width: var(--max-width);
+            margin: 2rem auto 0;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-text-light);
+            padding: 0.75rem 0;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--color-text);
+            border-bottom-color: var(--color-text);
+        }
+
+        /* SECTION */
+        section {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: currentColor;
+        }
+
+        .region-costa h2 { color: var(--color-costa); }
+        .region-sierra h2 { color: var(--color-sierra); }
+        .region-selva h2 { color: var(--color-selva); }
+
+        .region-description {
+            color: var(--color-text-light);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        /* GRID */
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* CARD */
+        .city-card {
+            background: var(--color-bg);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .city-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        .city-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .city-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .city-location {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+        }
+
+        .city-visuals {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .visual-item {
+            padding: 1rem;
+            background: var(--color-bg-alt);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-item:first-child {
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .visual-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .visual-content {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .visual-content img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .loading {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+        }
+
+        /* STATS */
+        .city-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+
+        .stat {
+            padding: 1rem;
+            text-align: center;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-light);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .stat-unit {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+            font-weight: 400;
+        }
+
+        /* DOWNLOAD SECTION */
+        .download-section {
+            background: var(--color-bg-alt);
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .download-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        .download-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-card p {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background: var(--color-text);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #1a252f;
+            transform: translateY(-1px);
+        }
+
+        /* FOOTER */
+        footer {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        footer a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            section h2 { font-size: 1.5rem; }
+            .cities-grid { grid-template-columns: 1fr; }
+            nav { flex-direction: column; gap: 0; }
+            nav a { padding: 0.5rem 0; }
+            .city-visuals { grid-template-columns: 1fr; }
+            .visual-item:first-child { border-right: none; border-bottom: 1px solid #e0e0e0; }
+            .city-stats { grid-template-columns: 1fr; }
+            .stat { border-right: none; border-bottom: 1px solid #e0e0e0; }
+            .stat:last-child { border-bottom: none; }
+        }
+
+        /* ERROR STATE */
+        .error-message {
+            background: #fee;
+            border: 1px solid #fcc;
+            border-radius: 4px;
+            padding: 1rem;
+            color: #c33;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Orientación de la red de calles de las principales ciudades del Perú</h1>
+    <header>
+        <h1>Orientación de Calles en las Principales Ciudades del Perú</h1>
+        <p class="subtitle">
+            Análisis de la estructura vial urbana a través de la orientación de las calles 
+            en las tres ciudades más pobladas de cada región natural del Perú.
+        </p>
+    </header>
+
     <nav>
-      <button id="btnInicio">Inicio</button>
-      <button id="btnGaleria">Galería</button>
-      <button id="btnDescargas">Descargas</button>
+        <a href="#costa">Costa</a>
+        <a href="#sierra">Sierra</a>
+        <a href="#selva">Selva</a>
+        <a href="#descargas">Descargas</a>
     </nav>
-  </header>
-  <main>
-    <section id="inicio" class="visible">
-      <div id="intro"></div>
-      <h2>Destacados</h2>
-      <div id="destacados" class="galeria"></div>
-      <h2>Galería completa</h2>
-      <div id="galeria-completa" class="galeria"></div>
+
+    <!-- COSTA -->
+    <section id="costa" class="region-costa">
+        <h2>Costa</h2>
+        <p class="region-description">Región costera del Perú, caracterizada por su clima árido y concentración urbana</p>
+        <div class="cities-grid" id="grid-costa"></div>
     </section>
-    <section id="galeria" class="hidden">
-      <h2>Galería de ciudades</h2>
-      <div id="filtros"></div>
-      <div id="galeria-filtrada" class="galeria"></div>
+
+    <!-- SIERRA -->
+    <section id="sierra" class="region-sierra">
+        <h2>Sierra</h2>
+        <p class="region-description">Región andina del Perú, con topografía montañosa y ciudades en valles interandinos</p>
+        <div class="cities-grid" id="grid-sierra"></div>
     </section>
-    <section id="descargas" class="hidden">
-      <h2>Descargas</h2>
-      <div id="descarga-filtros"></div>
-      <div id="descarga-preview"></div>
-      <div id="descarga-opciones"></div>
-      <div id="descarga-cita">
-        <strong>Cita recomendada:</strong>
-        <blockquote>Rojas-Quiroz, J. (2024). Orientación de la red de calles de las principales ciudades del Perú (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.13918305</blockquote>
-      </div>
+
+    <!-- SELVA -->
+    <section id="selva" class="region-selva">
+        <h2>Selva</h2>
+        <p class="region-description">Región amazónica del Perú, con clima tropical y desarrollo urbano disperso</p>
+        <div class="cities-grid" id="grid-selva"></div>
     </section>
-  </main>
-  <div id="modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close" id="modal-close">&times;</span>
-      <div id="modal-body"></div>
-    </div>
-  </div>
-  <footer>
-    <p>Desarrollado por Rojas-Quiroz, J. | Datos: OpenStreetMap &amp; OSMNx | Web estática para GitHub Pages</p>
-  </footer>
-  <script src="app.js"></script>
+
+    <!-- DESCARGAS -->
+    <section id="descargas" class="download-section">
+        <h2>Descargas</h2>
+        <p class="region-description">Descarga los datos completos y fichas de todas las ciudades analizadas</p>
+        
+        <div class="download-grid">
+            <div class="download-card">
+                <div class="download-icon">📊</div>
+                <h3>Todas las fichas</h3>
+                <p>Fichas completas en PNG de todas las ciudades procesadas</p>
+                <button class="download-btn" onclick="downloadAllFichas()">Descargar ZIP</button>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">🗺️</div>
+                <h3>GeoPackage completo</h3>
+                <p>Polígonos urbanos y red de calles en formato vectorial</p>
+                <a href="data/peru_sno.gpkg" class="download-btn" download>Descargar GPKG</a>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">📋</div>
+                <h3>Datos JSON</h3>
+                <p>Información estructurada de todas las ciudades</p>
+                <a href="data/ciudades.json" class="download-btn" download>Descargar JSON</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            Elaborado por <a href="https://jose-rojasquiroz.github.io/" target="_blank">José Rojas-Quiroz</a> | 
+            Datos: INEI 2017, OpenStreetMap y OSMNx | 
+            <a href="https://github.com/jose-rojasquiroz/peru_sno" target="_blank">Para una reproducción completa puedes ver el repositorio en GitHub</a>
+        </p>
+    </footer>
+
+    <script>
+        // Configuración
+        const DATA_PATH = 'data/';
+        const regions = ['costa', 'sierra', 'selva'];
+
+        // Función para formatear números
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(0) + 'K';
+            }
+            return num.toString();
+        }
+
+        // Crear tarjeta de ciudad
+        function createCityCard(city) {
+            const card = document.createElement('div');
+            card.className = 'city-card';
+            card.onclick = () => window.open(`fichas/${city.nombre.replace(/ /g, '_')}_ficha.png`, '_blank');
+            
+            card.innerHTML = `
+                <div class="city-card-header">
+                    <div class="city-name">${city.nombre}</div>
+                    <div class="city-location">${city.provincia}, ${city.departamento}</div>
+                </div>
+                
+                <div class="city-visuals">
+                    <div class="visual-item">
+                        <div class="visual-label">Orientación</div>
+                        <div class="visual-content">
+                            <img src="${city.grafico_polar}" alt="Gráfico polar ${city.nombre}" 
+                                 onerror="this.parentElement.innerHTML='<span class=loading>No disponible</span>'">
+                        </div>
+                    </div>
+                    <div class="visual-item">
+                        <div class="visual-label">Red Vial</div>
+                        <div class="visual-content">
+                            <img src="${city.mapa_calles}" alt="Mapa ${city.nombre}"
+                                 onerror="this.parentElement.innerHTML='<span class=loading>No disponible</span>'">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="city-stats">
+                    <div class="stat">
+                        <div class="stat-label">Población</div>
+                        <div class="stat-value">${formatNumber(city.poblacion)}</div>
+                        <div class="stat-unit">habitantes</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Área</div>
+                        <div class="stat-value">${city.area_km2.toFixed(1)}</div>
+                        <div class="stat-unit">km²</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Densidad</div>
+                        <div class="stat-value">${Math.round(city.densidad)}</div>
+                        <div class="stat-unit">hab/km²</div>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Cargar datos de una región
+        async function loadRegion(region) {
+            const grid = document.getElementById(`grid-${region}`);
+            
+            try {
+                const response = await fetch(`${DATA_PATH}${region}_top3.json`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const cities = await response.json();
+                
+                grid.innerHTML = '';
+                cities.forEach(city => {
+                    grid.appendChild(createCityCard(city));
+                });
+                
+            } catch (error) {
+                console.error(`Error cargando ${region}:`, error);
+                grid.innerHTML = `<div class="error-message">Error cargando datos de la región ${region}. Verifica que los archivos JSON estén disponibles.</div>`;
+            }
+        }
+
+        // Descargar todas las fichas (placeholder)
+        function downloadAllFichas() {
+            alert('Para descargar todas las fichas, comprime manualmente la carpeta "fichas/" en un archivo ZIP y súbela a tu repositorio. Luego actualiza el enlace en el botón.');
+        }
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Cargar todas las regiones al iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            regions.forEach(region => loadRegion(region));
+        });
+    </script>
 </body>
 </html>

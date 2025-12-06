@@ -2,3 +2,7 @@
 data/*.gpkg filter=lfs diff=lfs merge=lfs -text
 examples/*.png filter=lfs diff=lfs merge=lfs -text
 web/data filter=lfs diff=lfs merge=lfs -text
+docs/data/*.gpkg filter=lfs diff=lfs merge=lfs -text
+docs/fichas/*.png filter=lfs diff=lfs merge=lfs -text
+docs/graficos/*.png filter=lfs diff=lfs merge=lfs -text
+docs/mapas/*.png filter=lfs diff=lfs merge=lfs -text

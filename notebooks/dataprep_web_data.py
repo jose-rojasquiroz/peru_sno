@@ -43,10 +43,35 @@ def calcular_densidad(gdf):
     return gdf
 
 def get_bearings_from_polygon(city_polygon, city_name):
-    """Obtiene los bearings de las calles de una ciudad"""
+    """Obtiene los bearings de las calles de una ciudad (soporta MultiPolygon)"""
+    from shapely.geometry import MultiPolygon
+    import networkx as nx
     try:
         print(f"  Descargando red de calles para {city_name}...")
-        graph = ox.graph_from_polygon(city_polygon, network_type='drive')
+        
+        # Si es MultiPolygon, descargar para cada polígono y combinar
+        if isinstance(city_polygon, MultiPolygon):
+            graphs = []
+            for i, poly in enumerate(city_polygon.geoms):
+                try:
+                    g = ox.graph_from_polygon(poly, network_type='drive')
+                    if g and len(g.nodes) > 0:
+                        graphs.append(g)
+                except Exception as e_poly:
+                    print(f"    Polígono {i+1}: sin calles o error")
+                    continue
+            
+            if not graphs:
+                print(f"  ✗ {city_name}: No se pudo descargar ninguna red")
+                return None, None
+            
+            # Combinar grafos usando networkx compose
+            graph = graphs[0]
+            for g in graphs[1:]:
+                graph = nx.compose(graph, g)
+        else:
+            graph = ox.graph_from_polygon(city_polygon, network_type='drive')
+        
         graph = ox.bearing.add_edge_bearings(graph)
         bearings = [d['bearing'] for u, v, k, d in graph.edges(keys=True, data=True) if 'bearing' in d]
         print(f"  ✓ {city_name}: {len(bearings)} segmentos de calles")
