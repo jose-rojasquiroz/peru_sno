@@ -23,7 +23,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            font-family: "Computer Modern Serif", serif;
             line-height: 1.6;
             color: var(--color-text);
             background: var(--color-bg);
@@ -69,7 +69,7 @@
         }
 
         .narrative-text {
-            flex: 1;
+            flex: 0 0 25%;
             font-size: 1.1rem;
             line-height: 1.8;
             color: var(--color-text-light);
@@ -87,7 +87,7 @@
         .region-selva .narrative-text h2 { color: var(--color-selva); }
 
         .cities-showcase {
-            flex: 1;
+            flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             gap: 2rem;
@@ -264,8 +264,7 @@
             border-color: var(--color-text);
         }
 
-        .city-option.selected .city-option-name,
-        .city-option.selected .city-option-region {
+        .city-option.selected .city-option-name {
             color: white;
         }
 
@@ -276,16 +275,12 @@
             margin-bottom: 0.5rem;
         }
 
-        .city-option-region {
-            font-size: 0.9rem;
-            color: var(--color-text-light);
-        }
-
         .filter-actions {
             display: flex;
             gap: 1rem;
             margin-top: 2rem;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .download-btn {
@@ -312,6 +307,46 @@
             background: #bbb;
             cursor: not-allowed;
             transform: none;
+        }
+
+        .select-all-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #666;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-all-btn:hover {
+            background: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .clear-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #888;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background: #777;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         /* FOOTER */
@@ -370,6 +405,9 @@
                 min-height: auto;
                 padding: 2rem 1rem;
             }
+            .narrative-text {
+                flex: 0 0 auto;
+            }
             .cities-showcase {
                 order: -1;
             }
@@ -386,6 +424,13 @@
             .filter-results {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
+            .filter-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .download-btn, .select-all-btn, .clear-btn {
+                width: 100%;
+            }
         }
 
         /* LOADING STATE */
@@ -398,7 +443,7 @@
 <body>
     <!-- HERO SECTION -->
     <section class="hero">
-        <h1>Orientación de Calles en las Principales Ciudades del Perú</h1>
+        <h1>Orientación de calles en las principales ciudades del Perú</h1>
         <p>
             Explora la estructura vial urbana a través de la orientación de las calles 
             en las tres ciudades más pobladas de cada región natural del Perú.
@@ -463,19 +508,16 @@
                     <option value="">Todos</option>
                 </select>
             </div>
-            <div class="filter-group">
-                <label for="filter-province">Provincia</label>
-                <select id="filter-province" onchange="updateFilters()">
-                    <option value="">Todas</option>
-                </select>
-            </div>
         </div>
         <div class="filter-results" id="filter-results"></div>
         <div class="filter-actions">
             <button class="download-btn" id="download-selected-btn" onclick="downloadSelected()" disabled>
                 Descargar fichas seleccionadas
             </button>
-            <button class="download-btn" style="background: #666;" onclick="clearSelection()">
+            <button class="select-all-btn" onclick="selectAll()">
+                Seleccionar todos
+            </button>
+            <button class="clear-btn" onclick="clearSelection()">
                 Limpiar selección
             </button>
         </div>
@@ -487,7 +529,6 @@
         <p>Datos: INEI 2017, OpenStreetMap y OSMNx</p>
         <div class="footer-links">
             <a href="data/peru_sno.gpkg" class="footer-link-btn" download>📥 Descargar GeoPackage</a>
-            <a href="data/ciudades.json" class="footer-link-btn" download>📋 Descargar JSON</a>
             <a href="https://github.com/jose-rojasquiroz/peru_sno" target="_blank" class="footer-link-btn">🔗 Ver repositorio GitHub</a>
         </div>
     </footer>
@@ -588,28 +629,18 @@
         // Poblar filtros
         function populateFilters() {
             const departments = new Set();
-            const provinces = new Set();
             
             allCities.forEach(city => {
                 if (city.departamento) departments.add(city.departamento);
-                if (city.provincia) provinces.add(city.provincia);
             });
             
             const deptSelect = document.getElementById('filter-department');
-            const provSelect = document.getElementById('filter-province');
             
             Array.from(departments).sort().forEach(dept => {
                 const option = document.createElement('option');
                 option.value = dept;
                 option.textContent = dept;
                 deptSelect.appendChild(option);
-            });
-            
-            Array.from(provinces).sort().forEach(prov => {
-                const option = document.createElement('option');
-                option.value = prov;
-                option.textContent = prov;
-                provSelect.appendChild(option);
             });
         }
 
@@ -622,12 +653,10 @@
         function displayFilterResults() {
             const region = document.getElementById('filter-region').value;
             const department = document.getElementById('filter-department').value;
-            const province = document.getElementById('filter-province').value;
             
             const filtered = allCities.filter(city => {
                 if (region && city.region !== region) return false;
                 if (department && city.departamento !== department) return false;
-                if (province && city.provincia !== province) return false;
                 return true;
             });
             
@@ -643,7 +672,6 @@
                 
                 option.innerHTML = `
                     <div class="city-option-name">${city.nombre}</div>
-                    <div class="city-option-region">${city.region}</div>
                 `;
                 
                 option.onclick = () => toggleSelection(city.nombre, option);
@@ -681,6 +709,25 @@
             selectedCities.clear();
             displayFilterResults();
             document.getElementById('download-selected-btn').disabled = true;
+        }
+
+        // Seleccionar todos
+        function selectAll() {
+            const region = document.getElementById('filter-region').value;
+            const department = document.getElementById('filter-department').value;
+            
+            const filtered = allCities.filter(city => {
+                if (region && city.region !== region) return false;
+                if (department && city.departamento !== department) return false;
+                return true;
+            });
+            
+            filtered.forEach(city => {
+                selectedCities.add(city.nombre);
+            });
+            
+            displayFilterResults();
+            document.getElementById('download-selected-btn').disabled = selectedCities.size === 0;
         }
 
         // Inicializar
