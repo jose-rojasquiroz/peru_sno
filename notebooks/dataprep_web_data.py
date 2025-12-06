@@ -5,7 +5,7 @@ import osmnx as ox
 import matplotlib.pyplot as plt
 import json
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from shapely.geometry import box
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -55,7 +55,7 @@ def get_bearings_from_polygon(city_polygon, city_name):
         print(f"  ✗ Error en {city_name}: {e}")
         return None, None
 
-def create_street_map(graph, city_name, region, output_path):
+def create_street_map(graph, city_name, region, output_path, map_extent=None):
     """Crea y guarda el mapa de la red de calles"""
     try:
         fig, ax = plt.subplots(figsize=(10, 10), facecolor='white')
@@ -63,6 +63,10 @@ def create_street_map(graph, city_name, region, output_path):
         # Plot del grafo
         ox.plot_graph(graph, ax=ax, node_size=0, edge_color='#333333', 
                       edge_linewidth=0.5, bgcolor='white', show=False, close=False)
+        if map_extent:
+            xmin, xmax, ymin, ymax = map_extent
+            ax.set_xlim(xmin, xmax)
+            ax.set_ylim(ymin, ymax)
         
         ax.set_title(f'{city_name}\nRed de Calles', 
                      fontsize=16, fontweight='bold', pad=20)
@@ -109,7 +113,7 @@ def create_polar_plot(bearings, city_name, region, output_path):
     
     print(f"  ✓ Gráfico guardado: {output_path.name}")
 
-def create_ficha(city_data, bearings, graph, output_path):
+def create_ficha(city_data, bearings, graph, output_path, map_extent=None):
     """Crea una ficha completa (imagen) de la ciudad con mapa de calles"""
     fig = plt.figure(figsize=(16, 10))
     gs = fig.add_gridspec(2, 3, width_ratios=[1.2, 1, 1], height_ratios=[1, 1], 
@@ -125,6 +129,10 @@ def create_ficha(city_data, bearings, graph, output_path):
     try:
         ox.plot_graph(graph, ax=ax_mapa, node_size=0, edge_color='#333333', 
                       edge_linewidth=0.5, bgcolor='white', show=False, close=False)
+        if map_extent:
+            xmin, xmax, ymin, ymax = map_extent
+            ax_mapa.set_xlim(xmin, xmax)
+            ax_mapa.set_ylim(ymin, ymax)
         ax_mapa.set_title('Red de Calles', fontsize=14, fontweight='bold', pad=10)
         ax_mapa.set_axis_off()
     except:
@@ -207,7 +215,7 @@ DENSIDAD
     
     print(f"  ✓ Ficha guardada: {output_path.name}")
 
-def process_city(idx, city_row, gdf_cities):
+def process_city(idx, city_row, gdf_cities, map_extent):
     """Procesa una ciudad individual"""
     city_name = city_row['CIUDAD']
     city_polygon = city_row['geometry']
@@ -224,7 +232,7 @@ def process_city(idx, city_row, gdf_cities):
     
     # Crear mapa de calles
     mapa_path = OUTPUT_DIR / 'mapas' / f'{city_name.replace(" ", "_")}_mapa.png'
-    create_street_map(graph, city_name, region, mapa_path)
+    create_street_map(graph, city_name, region, mapa_path, map_extent)
     
     # Crear gráfico polar individual
     polar_path = OUTPUT_DIR / 'graficos' / f'{city_name.replace(" ", "_")}_polar.png'
@@ -232,7 +240,7 @@ def process_city(idx, city_row, gdf_cities):
     
     # Crear ficha completa (ahora incluye el mapa)
     ficha_path = OUTPUT_DIR / 'fichas' / f'{city_name.replace(" ", "_")}_ficha.png'
-    create_ficha(city_row, bearings, graph, ficha_path)
+    create_ficha(city_row, bearings, graph, ficha_path, map_extent)
     
     # Preparar datos para JSON
     city_data = {
@@ -251,6 +259,34 @@ def process_city(idx, city_row, gdf_cities):
     }
     
     return city_data, graph
+
+
+def select_top_cities(gdf):
+    """Selecciona top 3 ciudades por población por región (Costa, Sierra, Selva) excluyendo Lima Metropolitana."""
+    gdf_no_lima = gdf[gdf['CIUDAD'].str.upper() != 'LIMA METROPOLITANA']
+    top_cities = []
+    for region in ['Costa', 'Sierra', 'Selva']:
+        region_cities = gdf_no_lima[gdf_no_lima['REGNAT'] == region]
+        top_cities.append(region_cities.nlargest(3, 'POB17'))
+    return pd.concat(top_cities)
+
+
+def compute_common_half_extent_m(gdf_top):
+    """Calcula la mitad del lado del cuadro (en metros) que usaremos para todos los mapas."""
+    gdf_metric = gdf_top.to_crs('EPSG:32718')
+    bounds = gdf_metric.bounds
+    max_dim = np.maximum(bounds['maxx'] - bounds['minx'], bounds['maxy'] - bounds['miny'])
+    return max_dim.max() / 2
+
+
+def build_map_extent(city_polygon, half_size_m, base_crs):
+    """Genera una caja cuadrada centrada en la ciudad con el tamaño común, en coordenadas originales."""
+    geom_metric = gpd.GeoSeries([city_polygon], crs=base_crs).to_crs('EPSG:32718').iloc[0]
+    cx, cy = geom_metric.centroid.x, geom_metric.centroid.y
+    bbox_metric = box(cx - half_size_m, cy - half_size_m, cx + half_size_m, cy + half_size_m)
+    bbox_wgs = gpd.GeoSeries([bbox_metric], crs='EPSG:32718').to_crs(base_crs)
+    minx, miny, maxx, maxy = bbox_wgs.total_bounds
+    return (minx, maxx, miny, maxy)
 
 # ============================================================================
 # SCRIPT PRINCIPAL
@@ -272,6 +308,18 @@ def main():
     print("\n[2/5] Calculando áreas y densidades poblacionales...")
     gdf_cities = calcular_densidad(gdf_cities)
     print(f"  ✓ Densidades calculadas")
+
+    # 2b. Seleccionar top 3 por región (excluyendo Lima Metropolitana)
+    gdf_top = select_top_cities(gdf_cities)
+    print(f"  ✓ Seleccionadas {len(gdf_top)} ciudades (top 3 por región, sin Lima Metropolitana)")
+
+    # 2c. Calcular escala común para mapas con la ciudad más grande
+    common_half_extent_m = compute_common_half_extent_m(gdf_top)
+    map_extents = {
+        row['CIUDAD']: build_map_extent(row['geometry'], common_half_extent_m, gdf_cities.crs)
+        for _, row in gdf_top.iterrows()
+    }
+    print(f"  ✓ Extensión común calculada para mapas")
     
     # 3. Procesar ciudades
     print("\n[3/5] Procesando ciudades (descargando redes y generando gráficos/mapas)...")
@@ -281,8 +329,9 @@ def main():
     all_graphs = []
     
     # Procesamiento secuencial (más estable que paralelo para OSMnx)
-    for idx, (_, city_row) in enumerate(gdf_cities.iterrows()):
-        result = process_city(idx, city_row, gdf_cities)
+    for idx, (_, city_row) in enumerate(gdf_top.iterrows()):
+        city_extent = map_extents.get(city_row['CIUDAD'])
+        result = process_city(idx, city_row, gdf_top, city_extent)
         if result:
             city_data, graph = result
             all_city_data.append(city_data)
@@ -312,8 +361,8 @@ def main():
     print("\n[5/5] Exportando GeoPackages...")
     
     # GeoPackage de polígonos urbanos
-    gdf_export = gdf_cities[['CIUDAD', 'POB17', 'REGNAT', 'DEPARTAMENTO', 
-                              'PROVINCIA', 'area_km2', 'densidad', 'geometry']].copy()
+    gdf_export = gdf_top[['CIUDAD', 'POB17', 'REGNAT', 'DEPARTAMENTO', 
+                          'PROVINCIA', 'area_km2', 'densidad', 'geometry']].copy()
     gdf_export.to_file(OUTPUT_DIR / 'data' / 'poligonos_urbanos.gpkg', driver='GPKG')
     print("  ✓ poligonos_urbanos.gpkg")
     
