@@ -431,15 +431,13 @@ def main():
         print(f"  ✓ {region.lower()}_top3.json")
     
     # 5. Exportar GeoPackages
-    print("\n[5/5] Exportando GeoPackages...")
+    print("\n[5/5] Exportando GeoPackage unificado...")
     
-    # GeoPackage de polígonos urbanos
+    # Preparar polígonos urbanos
     gdf_export = gdf_cities[['CIUDAD', 'POB17', 'REGNAT', 'DEPARTAMENTO', 
                              'PROVINCIA', 'area_km2', 'densidad', 'geometry']].copy()
-    gdf_export.to_file(OUTPUT_DIR / 'data' / 'poligonos_urbanos.gpkg', driver='GPKG')
-    print("  ✓ poligonos_urbanos.gpkg")
     
-    # GeoPackage de red de calles (todas las ciudades)
+    # Consolidar redes de calles
     print("  Consolidando redes de calles...")
     all_edges = []
     
@@ -452,6 +450,14 @@ def main():
             except Exception as e:
                 print(f"  ✗ Error exportando calles de {city_name}: {e}")
     
+    # Guardar en un solo GeoPackage con dos layers
+    gpkg_path = OUTPUT_DIR / 'data' / 'peru_sno.gpkg'
+    
+    # Layer 1: polígonos urbanos
+    gdf_export.to_file(gpkg_path, layer='poligonos_urbanos', driver='GPKG')
+    print(f"  ✓ Layer 'poligonos_urbanos' guardado")
+    
+    # Layer 2: red de calles
     if all_edges:
         gdf_streets = gpd.GeoDataFrame(pd.concat(all_edges, ignore_index=True))
         # Mantener solo columnas relevantes
@@ -460,8 +466,10 @@ def main():
         cols_available = [c for c in cols_to_keep if c in gdf_streets.columns]
         gdf_streets = gdf_streets[cols_available]
         
-        gdf_streets.to_file(OUTPUT_DIR / 'data' / 'red_calles.gpkg', driver='GPKG')
-        print(f"  ✓ red_calles.gpkg ({len(gdf_streets)} segmentos)")
+        gdf_streets.to_file(gpkg_path, layer='red_calles', driver='GPKG')
+        print(f"  ✓ Layer 'red_calles' guardado ({len(gdf_streets)} segmentos)")
+    
+    print(f"  ✓ peru_sno.gpkg creado con {2 if all_edges else 1} layers")
     
     # Resumen final
     print("\n" + "="*70)
