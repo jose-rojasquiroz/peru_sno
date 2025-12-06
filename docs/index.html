@@ -538,6 +538,14 @@
         let allCities = [];
         let selectedCities = new Set();
 
+        // Generar nombre de archivo seguro para las imágenes/fichas
+        function cityFileBase(name) {
+            return name
+                .trim()
+                .replace(/[\\/:*?"<>|]/g, '')
+                .replace(/\s+/g, '_');
+        }
+
         // Función para formatear números
         function formatNumber(num) {
             if (num >= 1000000) {
@@ -552,9 +560,10 @@
         function createShowcaseCard(city) {
             const card = document.createElement('div');
             card.className = 'city-showcase';
+            const fileBase = cityFileBase(city.nombre);
             
-            const polarImg = `graficos/${city.nombre}_polar.png`;
-            const mapImg = `mapas/${city.nombre}_mapa.png`;
+            const polarImg = `graficos/${fileBase}_polar.png`;
+            const mapImg = `mapas/${fileBase}_mapa.png`;
             
             card.innerHTML = `
                 <div class="showcase-header">
@@ -697,8 +706,9 @@
             if (selectedCities.size === 0) return;
             
             selectedCities.forEach(cityName => {
+                const fileBase = cityFileBase(cityName);
                 const link = document.createElement('a');
-                link.href = `fichas/${cityName.replace(/ /g, '_')}_ficha.png`;
+                link.href = `fichas/${fileBase}_ficha.png`;
                 link.download = `${cityName}_ficha.png`;
                 link.click();
             });
